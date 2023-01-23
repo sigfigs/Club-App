@@ -65,13 +65,13 @@ class _SignInPageState extends State<SignInPage> {
                             if (value!.isEmpty) {
                               return 'Please enter your email';
                             }
-                            var osis = [];
-                            var email = [];
+                            String osis = "";
+                            // var email = [];
                             for (int i = 0; i < userdata.length; i++) {
-                              osis.add(userdata[i][1]);
-                              email.add(userdata[i][2]);
+                              osis = userdata[i][1];
+                              // email.add(userdata[i][2]);
                             }
-                            if (!osis.contains(t1.text) || !email.contains(t1.text)) {
+                            if (!osis.contains(t1.text)) {
                               return 'Email or OSIS does not exist';
                             }
                             return null;
