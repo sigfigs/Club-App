@@ -55,6 +55,17 @@ class _HomeState extends State<Home> {
                         fontSize: 30,
                       )),
                   SizedBox(height: 25),
+                  buildClubs(),
+
+                  //my clubs
+                  SizedBox(height: 30),
+                  Text("My Clubs",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      )),
+                  SizedBox(height: 25),
                   buildClubs()
                 ]))));
   }
@@ -132,12 +143,12 @@ Widget buildClubs() {
   return (SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: [
-          ClubCard(),
-          ClubCard(),
-          ClubCard(),
-        ],
-      )));
+          children: List.generate(
+        3,
+        ((index) {
+          return ClubCard();
+        }),
+      ))));
 }
 
 class ClubCard extends StatefulWidget {

@@ -11,8 +11,6 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
-  List<String> list = <String>['Member', 'Teacher', 'Board', 'Admin'];
-  String? chosen = 'Member';
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width * 0.9;
