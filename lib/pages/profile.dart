@@ -1,7 +1,6 @@
-import 'package:club_app_3/main.dart';
 import 'package:flutter/material.dart';
-import 'package:club_app_3/user.dart';
-import 'home.dart';
+import 'package:club_app_5/user.dart';
+import 'signin.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -40,42 +39,43 @@ User temp = User(
     'My name is Ben and I like girls. Specially small girls since I am a little baby and only 3 years old inside of my body at all times');
 
 class _Profile extends State<Profile> {
-   int _selectedIndex = 0;
-    void _onItemTapped(int index) {
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var lst = [actual(width, height, temp),people(temp)];
+    var lst = [actual(width, height, temp), people(temp)];
     var admin = temp.role == 'Admin';
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF097969),
-        title: const Text("Profile"),
-        centerTitle: true,
-      ),
-      body: lst[_selectedIndex],
-      bottomNavigationBar: admin == true ? BottomNavigationBar(
-        selectedItemColor: Colors.green,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.cake),
-            label: 'Persons',
-          ),
-        ],
-      ) : 
-      null
-    );
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF097969),
+          title: const Text("Profile"),
+          centerTitle: true,
+        ),
+        body: lst[_selectedIndex],
+        bottomNavigationBar: admin == true
+            ? BottomNavigationBar(
+                selectedItemColor: Colors.green,
+                currentIndex: _selectedIndex,
+                onTap: _onItemTapped,
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: 'Profile',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.cake),
+                    label: 'Persons',
+                  ),
+                ],
+              )
+            : null);
   }
 
   Widget people(User temp) {
@@ -151,8 +151,10 @@ class _Profile extends State<Profile> {
                         borderRadius: BorderRadius.circular(10)),
                     backgroundColor: const Color(0xFF097969)),
                 onPressed: () {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => InitialPage()));
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => SignInPage()));
                 },
                 child: const Text('Sign Out',
                     style: TextStyle(
