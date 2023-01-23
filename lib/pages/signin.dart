@@ -65,16 +65,12 @@ class _SignInPageState extends State<SignInPage> {
                             if (value!.isEmpty) {
                               return 'Please enter your email';
                             }
-                            String osis = "";
-                            // var email = [];
                             for (int i = 0; i < userdata.length; i++) {
-                              osis = userdata[i][1];
-                              // email.add(userdata[i][2]);
+                              if (userdata[i][1] == t1.text) {
+                              return null;
                             }
-                            if (!osis.contains(t1.text)) {
-                              return 'Email or OSIS does not exist';
                             }
-                            return null;
+                            return 'Email or OSIS does not exist';
                           })),
                   Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -127,7 +123,7 @@ class _SignInPageState extends State<SignInPage> {
                                 _formKey.currentState!.reset();
                                 Navigator.push(
                                     context,
-                                     MaterialPageRoute(
+                                    MaterialPageRoute(
                                         builder: (context) => const Home()));
                               }
                             },
