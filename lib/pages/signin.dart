@@ -11,6 +11,12 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  @override
+  void initState() {
+    print(userdata);
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -121,7 +127,7 @@ class _SignInPageState extends State<SignInPage> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 _formKey.currentState!.reset();
-                                print(t1.text);
+                               
                               }
                               Navigator.push(
                                   context,
