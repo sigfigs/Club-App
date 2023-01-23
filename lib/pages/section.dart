@@ -8,13 +8,11 @@ class Section extends StatefulWidget {
   final String sectionIcon;
   const Section({required this.sectionName, required this.sectionIcon});
 
-
   @override
   State<Section> createState() => _Section();
 }
 
 class _Section extends State<Section> {
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -36,19 +34,23 @@ class _Section extends State<Section> {
                   child: Text('All ${widget.sectionName} Clubs',
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold)))),
-          Column(children: 
-            List.generate(10, (index){
-              if(categorys[index][0] == widget.sectionName){
-              return(
-                Padding(
-              padding: EdgeInsets.only(right: 20, left: 20), child: ClubCard())
-              );
-            }
-            else{
+          Column(
+              children: List.generate(
+                  int.parse(categorySizes[widget.sectionName].toString()),
+                  (index) {
+            if (monkey[index][2] == widget.sectionName) {
+              return (Padding(
+                  padding: EdgeInsets.only(right: 20, left: 20),
+                  child: ClubCard(
+                    // clubName: "wang",
+                    // clubDay: "Monday"
+                    clubName: monkey[index][3],
+                    clubDay: monkey[index][4]
+                  )));
+            } else {
               return (Container());
             }
-            })
-          )
+          }))
         ])));
   }
 }

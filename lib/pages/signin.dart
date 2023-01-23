@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signup.dart';
 import 'home.dart';
+import '../clubs_db_3.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -15,6 +16,8 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width * 0.9;
     var height = MediaQuery.of(context).size.height * 0.07;
+    TextEditingController t1 = TextEditingController();
+    TextEditingController t2 = TextEditingController();
     return MaterialApp(
         title: 'Login and Sign Up',
         home: Scaffold(
@@ -48,28 +51,39 @@ class _SignInPageState extends State<SignInPage> {
                       height: height * 1.2,
                       width: width,
                       child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          controller: t1,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: 'Enter School OSIS or EMAIL',
+                            hintText: 'Enter your OSIS',
                           ),
-                          labelText: 'Enter School Email',
-                          hintText: 'Enter your email',
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          return null;
-                        },
-                      )),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your email';
+                            }
+                            // var osis = [];
+                            // var email = [];
+                            // for (int i = 0; i < userdata.length; i++) {
+                            //   osis.add(userdata[i][1]);
+                            //   email.add(userdata[i][2]);
+                            //   print(userdata[i][1]);
+                            // }
+                            // if (!osis.contains(t1) || !email.contains(t1)) {
+                            //   return 'Email or OSIS does not exist';
+                            // }
+                            return null;
+                          })),
                   Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
                           height: height * 1.2,
                           width: width,
                           child: TextFormField(
+                            controller: t2,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 20, horizontal: 10),
@@ -84,6 +98,16 @@ class _SignInPageState extends State<SignInPage> {
                               if (value!.isEmpty) {
                                 return 'Please enter your password';
                               }
+                              // Map osis = {};
+                              // Map email = {};
+                              // for (int i = 0; i < userdata.length; i++) {
+                              //   osis[userdata[i][2]] = userdata[i][3];
+                              //   email[userdata[i][2]] = userdata[i][3];
+                              // }
+                              // if (osis[t1.text] != t2.text ||
+                              //     email[t1.text] != t2.text) {
+                              //   return 'Incorrect Password';
+                              // }
                               return null;
                             },
                           ))),
@@ -102,11 +126,12 @@ class _SignInPageState extends State<SignInPage> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 _formKey.currentState!.reset();
+
+                                Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) => Home()));
                               }
-                              Navigator.push(
-                                  context,
-                                  new MaterialPageRoute(
-                                      builder: (context) => Home()));
                             },
                             child: const Text('LOG IN',
                                 style: TextStyle(

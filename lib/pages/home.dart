@@ -146,13 +146,16 @@ Widget buildClubs() {
           children: List.generate(
         3,
         ((index) {
-          return ClubCard();
+          return ClubCard(clubName: "Athletics", clubDay: "Tuesday");
         }),
       ))));
 }
 
 class ClubCard extends StatefulWidget {
-  const ClubCard({super.key});
+  // const ClubCard({super.key});
+  final String clubName;
+  final String clubDay;
+  const ClubCard({required this.clubName, required this.clubDay});
 
   @override
   State<ClubCard> createState() => _ClubCardState();
