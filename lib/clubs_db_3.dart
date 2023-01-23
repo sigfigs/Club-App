@@ -43,12 +43,12 @@ void main() async {
   // for (int i = 0; i < clubs.length; i++) {
   //   categorySizes[clubs[i][2]] = (categorySizes[clubs[i][2]]! + 1);
   // }
-  Map osis = {};
-  Map email = {};
-  for (int i = 0; i < userdata.length; i++) {
-    osis[userdata[i][2]] = userdata[i][3];
-    email[userdata[i][2]] = userdata[i][3];
-  }
+var osis = [];
+                            var email = [];
+                            for (int i = 0; i < userdata.length; i++) {
+                              osis.add(userdata[i][1]);
+                              email.add(userdata[i][2]);
+                            }
   print(osis);
   print(email);
   print(userdata[1][2]);
