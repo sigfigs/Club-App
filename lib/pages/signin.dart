@@ -65,16 +65,16 @@ class _SignInPageState extends State<SignInPage> {
                             if (value!.isEmpty) {
                               return 'Please enter your email';
                             }
-                            // var osis = [];
-                            // var email = [];
-                            // for (int i = 0; i < userdata.length; i++) {
-                            //   osis.add(userdata[i][1]);
-                            //   email.add(userdata[i][2]);
-                            //   print(userdata[i][1]);
-                            // }
-                            // if (!osis.contains(t1) || !email.contains(t1)) {
-                            //   return 'Email or OSIS does not exist';
-                            // }
+                            var osis = [];
+                            var email = [];
+                            for (int i = 0; i < userdata.length; i++) {
+                              osis.add(userdata[i][1]);
+                              email.add(userdata[i][2]);
+                              print(userdata[i][1]);
+                            }
+                            if (!osis.contains(t1) || !email.contains(t1)) {
+                              return 'Email or OSIS does not exist';
+                            }
                             return null;
                           })),
                   Padding(
@@ -98,16 +98,16 @@ class _SignInPageState extends State<SignInPage> {
                               if (value!.isEmpty) {
                                 return 'Please enter your password';
                               }
-                              // Map osis = {};
-                              // Map email = {};
-                              // for (int i = 0; i < userdata.length; i++) {
-                              //   osis[userdata[i][2]] = userdata[i][3];
-                              //   email[userdata[i][2]] = userdata[i][3];
-                              // }
-                              // if (osis[t1.text] != t2.text ||
-                              //     email[t1.text] != t2.text) {
-                              //   return 'Incorrect Password';
-                              // }
+                              Map osis = {};
+                              Map email = {};
+                              for (int i = 0; i < userdata.length; i++) {
+                                osis[userdata[i][2]] = userdata[i][3];
+                                email[userdata[i][2]] = userdata[i][3];
+                              }
+                              if (osis[t1.text] != t2.text ||
+                                  email[t1.text] != t2.text) {
+                                return 'Incorrect Password';
+                              }
                               return null;
                             },
                           ))),
