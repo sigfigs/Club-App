@@ -43,13 +43,11 @@ void main() async {
   // for (int i = 0; i < clubs.length; i++) {
   //   categorySizes[clubs[i][2]] = (categorySizes[clubs[i][2]]! + 1);
   // }
-var osis = [];
-                            var email = [];
-                            for (int i = 0; i < userdata.length; i++) {
-                              osis.add(userdata[i][1]);
-                              email.add(userdata[i][2]);
+for (int i = 0; i < userdata.length; i++) {
+                              if (userdata[i][2] == 'user1@bxscience.edu') {
+                              print('monk');
                             }
-  print(osis);
-  print(email);
+                            }
+
   print(userdata[1][2]);
 }

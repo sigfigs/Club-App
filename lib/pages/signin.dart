@@ -67,8 +67,8 @@ class _SignInPageState extends State<SignInPage> {
                             }
                             for (int i = 0; i < userdata.length; i++) {
                               if (userdata[i][1] == t1.text) {
-                              return null;
-                            }
+                                return null;
+                              }
                             }
                             return 'Email or OSIS does not exist';
                           })),
@@ -121,11 +121,12 @@ class _SignInPageState extends State<SignInPage> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 _formKey.currentState!.reset();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const Home()));
+                                print(t1.text);
                               }
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Home()));
                             },
                             child: const Text('LOG IN',
                                 style: TextStyle(
