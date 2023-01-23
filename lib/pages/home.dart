@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
             ]),
         body: Container(
             margin: EdgeInsets.fromLTRB(20, 40, 20, 20),
-            child: (Column(
+            child: (SingleChildScrollView(child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text("Club Categories",
@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
                       )),
                   SizedBox(height: 25),
                   buildClubs()
-                ]))));
+                ])))));
   }
 }
 
