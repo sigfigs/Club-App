@@ -38,15 +38,14 @@ void main() async {
   // for (int i = 0; i < clubs.length; i++) {
   //   categorySizes[clubs[i][2]] = (categorySizes[clubs[i][2]]! + 1);
   // }
-  for (int i = 0; i < userdata.length; i++) {
-    if (userdata[i][2] == 'user1@bxscience.edu') {
-      print('monk');
-    }
-  }
+  // for (int i = 0; i < userdata.length; i++) {
+  //   if (userdata[i][2] == 'user1@bxscience.edu') {
+  //     print('monk');
+  //   }
+  // }
 
-    print(userdata[1][2]);
-  }
-
+  // print(userdata[1][2]);
+}
 
 class Dbhelper {
   List<List<dynamic>> monkey = [];
@@ -82,9 +81,19 @@ class Dbhelper {
   }
 
   Future<void> getData() async {
+    var monk = await connection.query("SELECT * FROM public.monkey");
+    for (var row in monk) {
+      monkey.add(row);
+    }
+
     var user = await connection.query("SELECT * FROM public.userdata");
     for (var row in user) {
       userdata.add(row);
+    }
+
+    
+    for (int i = 0; i < monkey.length; i++) {
+      categorySizes[monkey[i][2]] = (categorySizes[monkey[i][2]]! + 1);
     }
   }
 }
