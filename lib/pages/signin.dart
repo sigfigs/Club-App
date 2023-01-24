@@ -71,7 +71,6 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                           validator: (value) {
                             db.getData();
-                            print(db.userdata);
                             if (value!.isEmpty) {
                               return 'Please enter your email';
                             }
@@ -105,12 +104,13 @@ class _SignInPageState extends State<SignInPage> {
                               }
                               Map osis = {};
                               Map email = {};
-                              for (int i = 0; i < userdata.length; i++) {
-                                osis[userdata[i][1]] = userdata[i][3];
-                                email[userdata[i][2]] = userdata[i][3];
+                              for (int i = 0; i < db.userdata.length; i++) {
+                                osis[db.userdata[i][1]] = db.userdata[i][3];
+                                email[db.userdata[i][2]] = db.userdata[i][3];
                               }
-                              if (osis[t1.text] != t2.text ||
-                                  email[t1.text] != t2.text) {
+                              print(osis);
+                              print(email);
+                              if (osis[t1.text] != t2.text) {
                                 return 'Incorrect Password';
                               }
                               return null;
@@ -131,11 +131,12 @@ class _SignInPageState extends State<SignInPage> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 _formKey.currentState!.reset();
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Home()));
                               }
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Home()));
                             },
                             child: const Text('LOG IN',
                                 style: TextStyle(
