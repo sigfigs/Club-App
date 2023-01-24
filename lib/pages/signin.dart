@@ -11,10 +11,12 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  var db;
   @override
   void initState() {
-    print(userdata);
     super.initState();
+    db = Dbhelper();
+    db.initDb();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -68,11 +70,13 @@ class _SignInPageState extends State<SignInPage> {
                             hintText: 'Enter your OSIS',
                           ),
                           validator: (value) {
+                            db.getData();
+                            print(db.userdata);
                             if (value!.isEmpty) {
                               return 'Please enter your email';
                             }
-                            for (int i = 0; i < userdata.length; i++) {
-                              if (userdata[i][1] == t1.text) {
+                            for (int i = 0; i < db.userdata.length; i++) {
+                              if (db.userdata[i][1] == t1.text) {
                                 return null;
                               }
                             }
@@ -127,7 +131,6 @@ class _SignInPageState extends State<SignInPage> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 _formKey.currentState!.reset();
-                               
                               }
                               Navigator.push(
                                   context,
