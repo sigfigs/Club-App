@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'signup.dart';
 import 'home.dart';
 import '../clubs_db_3.dart';
+import 'package:club_app_5/user.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -10,6 +11,8 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
+late User ac;
+
 class _SignInPageState extends State<SignInPage> {
   var db;
   @override
@@ -17,6 +20,20 @@ class _SignInPageState extends State<SignInPage> {
     super.initState();
     db = Dbhelper();
     db.initDb();
+  }
+
+  var person = 0;
+
+  void login(var name, var email, var osis, var password, var usertype) {
+    ac = User(
+        ['Muslim Club', 'Hacker Jeffrey Li Club'],
+        email,
+        password,
+        name,
+        usertype,
+        2023,
+        int.parse(osis),
+        'My name is Ben and I like girls. Specially small girls since I am a little baby and only 3 years old inside of my body at all times');
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -59,6 +76,7 @@ class _SignInPageState extends State<SignInPage> {
                       height: height * 1.2,
                       width: width,
                       child: TextFormField(
+                          onTap: () => db.getData(),
                           controller: t1,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
@@ -70,12 +88,13 @@ class _SignInPageState extends State<SignInPage> {
                             hintText: 'Enter your OSIS',
                           ),
                           validator: (value) {
-                            db.getData();
                             if (value!.isEmpty) {
                               return 'Please enter your email';
                             }
-                            for (int i = 0; i < db.userdata.length; i++) {
-                              if (db.userdata[i][1] == t1.text || db.userdata[i][2] == t1.text) {
+                            for (int i = 0; i < userdata.length; i++) {
+                              if (userdata[i][1] == t1.text ||
+                                  userdata[i][2] == t1.text) {
+                                person = i;
                                 return null;
                               }
                             }
@@ -104,9 +123,9 @@ class _SignInPageState extends State<SignInPage> {
                               }
                               Map osis = {};
                               Map email = {};
-                              for (int i = 0; i < db.userdata.length; i++) {
-                                osis[db.userdata[i][1]] = db.userdata[i][3];
-                                email[db.userdata[i][2]] = db.userdata[i][3];
+                              for (int i = 0; i < userdata.length; i++) {
+                                osis[userdata[i][1]] = userdata[i][3];
+                                email[userdata[i][2]] = userdata[i][3];
                               }
                               print(osis);
                               print(email);
@@ -131,9 +150,13 @@ class _SignInPageState extends State<SignInPage> {
                                 backgroundColor: const Color(0xFF097969)),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
+                                login(
+                                    'Benjamin Chong',
+                                    userdata[person][2],
+                                    userdata[person][1],
+                                    userdata[person][3],
+                                    userdata[person][4]);
                                 _formKey.currentState!.reset();
-
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

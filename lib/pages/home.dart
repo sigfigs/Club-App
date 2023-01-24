@@ -12,7 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   var db;
   @override
   void initState() {
@@ -25,6 +24,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Color(0xFF097969),
             title: Text("BXSCI Clubs"),
             centerTitle: true,
@@ -57,15 +57,6 @@ class _HomeState extends State<Home> {
                       )),
                   SizedBox(height: 25),
                   buildSections(),
-                  SizedBox(height: 30),
-                  Text("Popular Clubs",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      )),
-                  SizedBox(height: 25),
-                  buildClubs(),
 
                   //my clubs
                   SizedBox(height: 30),
@@ -76,7 +67,18 @@ class _HomeState extends State<Home> {
                         fontSize: 30,
                       )),
                   SizedBox(height: 25),
-                  buildClubs()
+                  buildClubs(),
+
+                  //popular clubs
+                  SizedBox(height: 30),
+                  Text("Popular Clubs",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      )),
+                  SizedBox(height: 25),
+                  buildClubs(),
                 ])))));
   }
 }
@@ -121,9 +123,10 @@ class _SectionTabState extends State<SectionTab> {
                                         Image.asset("assets/bxscilogo.jpeg")),
                                 SizedBox(height: 10),
                                 Text(widget.tabName,
-                                maxLines: 1,
-                                    style:
-                                       const  TextStyle(fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis))
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis))
                               ],
                             )))))));
   }
@@ -150,6 +153,18 @@ Widget buildSections() {
       )));
 }
 
+// Widget buildMyClubs() {
+//   return (
+//     for(int i = 0; i < monkey.length; i++){
+//       if(userClubs.contains(monkey[i][0])){
+//         userClubsWidgets.add(
+//           ClubCard()
+//         )
+//       }
+//     }
+//   );
+// }
+
 Widget buildClubs() {
   return (SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -157,16 +172,23 @@ Widget buildClubs() {
           children: List.generate(
         3,
         ((index) {
-          return ClubCard(clubName: "Athletics", clubDay: "Tuesday");
+          return ClubCard(
+            clubName: "Filler Club",
+            clubDay: "Filler Day",
+            clubAdvisor: "Filler Advisor",
+          );
         }),
       ))));
 }
 
 class ClubCard extends StatefulWidget {
-  // const ClubCard({super.key});
   final String clubName;
   final String clubDay;
-  const ClubCard({required this.clubName, required this.clubDay});
+  final String clubAdvisor;
+  const ClubCard(
+      {required this.clubName,
+      required this.clubDay,
+      required this.clubAdvisor});
 
   @override
   State<ClubCard> createState() => _ClubCardState();
@@ -201,18 +223,17 @@ class _ClubCardState extends State<ClubCard> {
                             child: Image.asset("assets/bxscilogo.jpeg",
                                 width: 120)),
                         SizedBox(height: 20),
-                        Text("Muslim Student Association",
+                        Text(widget.clubName,
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         SizedBox(height: 20),
                         Text(
-                          "The Muslim Student Assocation (MSA) is a club that Shad is in. The Muslim Student Assocation (MSA) is a club that Shad is in.",
+                          "lorem ipsum is dummy text. lorem ipsum is dummy text. lorem ipsum is dummy text.",
                         ),
                         SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            buildTag("Tuesday"),
-                            buildTag("Medium Commitment")
+                            buildTag(widget.clubDay),
                           ],
                         )
                       ]),

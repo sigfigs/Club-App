@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'home.dart';
 import '../clubs_db_3.dart';
+import 'signin.dart';
 
 class Section extends StatefulWidget {
   final String sectionName;
@@ -13,6 +13,14 @@ class Section extends StatefulWidget {
 }
 
 class _Section extends State<Section> {
+  var db;
+  @override
+  void initState() {
+    super.initState();
+    db = Dbhelper();
+    db.initDb();
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -23,13 +31,13 @@ class _Section extends State<Section> {
             backgroundColor: Color(0xFF097969),
             title: Text(widget.sectionName),
             centerTitle: true),
-        floatingActionButton: FloatingActionButton(
-            onPressed: _showClubFormDialog,
-            child: Icon(Icons.add),
-            foregroundColor: Colors.green,
-            elevation: 10,
-            
-          ),
+        floatingActionButton: ac.role == 'Admin'
+            ? FloatingActionButton(
+                onPressed: _showClubFormDialog,
+                child: Icon(Icons.add),
+                elevation: 10,
+              )
+            : null,
         body: SingleChildScrollView(
             child: Column(children: [
           Image.asset('assets/sports.jpeg',
@@ -41,76 +49,79 @@ class _Section extends State<Section> {
                   child: Text('All ${widget.sectionName} Clubs',
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold)))),
-          Column(
-              children: List.generate(
-                  int.parse(categorySizes[widget.sectionName].toString()),
-                  (index) {
-            if (monkey[index][2] == widget.sectionName) {
-              return (Padding(
-                  padding: EdgeInsets.only(right: 20, left: 20),
-                  child: ClubCard(
-                    // clubName: "wang",
-                    // clubDay: "Monday"
-                    clubName: monkey[index][3],
-                    clubDay: monkey[index][4]
-                  )));
-            } else {
-              return (Container());
-            }
-          })),
+          Column(children: getAllClubsInCategory()),
         ])));
   }
 
-  void _showClubFormDialog() {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Add Club"),
-        content: Form(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: "Club Name"),
-                // onSaved: (value) => _clubName = value,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Category"),
-                // onSaved: (value) => _category = value,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Meeting Day"),
-                // onSaved: (value) => _meetingDay = value,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Advisor Name"),
-                // onSaved: (value) => _advisorName = value,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: "Advisor Email"),
-                // onSaved: (value) => _advisorEmail = value,
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text("Save"),
-            onPressed: () {
-              // Save the form data and close the dialog
-            },
-          ),
-          ElevatedButton(
-            child: Text("Cancel"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+  List<Widget> getAllClubsInCategory() {
+    List<Widget> validClubs = [];
+    for (int i = 0; i < monkey.length; i++) {
+      if (monkey[i][2] == widget.sectionName) {
+        validClubs.add(Padding(
+            padding: EdgeInsets.only(right: 20, left: 20),
+            child: ClubCard(
+                clubName: monkey[i][1],
+                clubDay: monkey[i][3],
+                clubAdvisor: monkey[i][4])));
+      }
+    }
+    return validClubs;
+  }
 
+  void _showClubFormDialog() {
+    String clubName = "";
+    String meetingDay = "";
+    String advisorName = "";
+    String advisorEmail = "";
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Add Club"),
+          content: Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Club Name"),
+                  onSaved: (value) => clubName = value.toString(),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Meeting Day"),
+                  onSaved: (value) => meetingDay = value.toString(),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Advisor Name"),
+                  onSaved: (value) => advisorName = value.toString(),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: "Advisor Email"),
+                  onSaved: (value) => advisorEmail = value.toString(),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("Save"),
+              onPressed: () {
+                db.insertClub(monkey.length.toString(), clubName,
+                    widget.sectionName, meetingDay, advisorName, advisorEmail);
+              },
+            ),
+            ElevatedButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // db.insertClub(
+    //     "6969", clubName, category, meetingDay, advisorName, advisorEmail);
+  }
 }
