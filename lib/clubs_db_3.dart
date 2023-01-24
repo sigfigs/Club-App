@@ -46,3 +46,45 @@ void main() async {
 
     print(userdata[1][2]);
   }
+
+
+class Dbhelper {
+  List<List<dynamic>> monkey = [];
+  List<List<dynamic>> userdata = [];
+  Map<String, int> categorySizes = {
+    "Athletics": 0,
+    "Careers": 0,
+    "Cultural/Religious": 0,
+    "Education/Discussion": 0,
+    "Games": 0,
+    "Hobbies": 0,
+    "Arts": 0,
+    "Publications": 0,
+    "Science": 0,
+    "Volunteer/Activism": 0,
+    "Activities": 0
+  };
+  final connection = PostgreSQLConnection(
+    "localhost",
+    5432,
+    "clubs",
+    username: "postgres",
+    password: "noor2005",
+  );
+
+  Future<void> initDb() async {
+    try {
+      await connection.open();
+      debugPrint("Database Connected!");
+    } catch (e) {
+      debugPrint("Error: $e");
+    }
+  }
+
+  Future<void> getData() async {
+    var user = await connection.query("SELECT * FROM public.userdata");
+    for (var row in user) {
+      userdata.add(row);
+    }
+  }
+}
