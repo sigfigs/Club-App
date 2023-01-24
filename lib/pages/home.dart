@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'clubhome.dart';
 import 'section.dart';
 import 'profile.dart';
+import 'package:club_app_5/clubs_db_3.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,6 +12,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  var db;
+  @override
+  void initState() {
+    super.initState();
+    db = Dbhelper();
+    db.initDb();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +45,10 @@ class _HomeState extends State<Home> {
             ]),
         body: Container(
             margin: EdgeInsets.fromLTRB(20, 40, 20, 20),
-            child: (SingleChildScrollView(child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+            child: (SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
                   Text("Club Categories",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -109,9 +120,10 @@ class _SectionTabState extends State<SectionTab> {
                                     child:
                                         Image.asset("assets/bxscilogo.jpeg")),
                                 SizedBox(height: 10),
-                                Text("Tab",
+                                Text(widget.tabName,
+                                maxLines: 1,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold))
+                                       const  TextStyle(fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis))
                               ],
                             )))))));
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:club_app_5/clubs_db_3.dart';
 import 'home.dart';
 
 class ClubHome extends StatefulWidget {
@@ -10,6 +10,14 @@ class ClubHome extends StatefulWidget {
 }
 
 class _ClubHomeState extends State<ClubHome> {
+  var db;
+  @override
+  void initState() {
+    super.initState();
+    db = Dbhelper();
+    db.initDb();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

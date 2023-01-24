@@ -75,7 +75,7 @@ class _SignInPageState extends State<SignInPage> {
                               return 'Please enter your email';
                             }
                             for (int i = 0; i < db.userdata.length; i++) {
-                              if (db.userdata[i][1] == t1.text) {
+                              if (db.userdata[i][1] == t1.text || db.userdata[i][2] == t1.text) {
                                 return null;
                               }
                             }
@@ -110,10 +110,12 @@ class _SignInPageState extends State<SignInPage> {
                               }
                               print(osis);
                               print(email);
-                              if (osis[t1.text] != t2.text) {
-                                return 'Incorrect Password';
+                              if (osis[t1.text] == t2.text) {
+                                return null;
+                              } else if (email[t1.text] == t2.text) {
+                                return null;
                               }
-                              return null;
+                              return 'Incorrect Password';
                             },
                           ))),
                   SizedBox(height: height / 4, width: width),
