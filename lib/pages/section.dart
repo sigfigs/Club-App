@@ -23,6 +23,13 @@ class _Section extends State<Section> {
             backgroundColor: Color(0xFF097969),
             title: Text(widget.sectionName),
             centerTitle: true),
+        floatingActionButton: FloatingActionButton(
+            onPressed: _showClubFormDialog,
+            child: Icon(Icons.add),
+            foregroundColor: Colors.green,
+            elevation: 10,
+            
+          ),
         body: SingleChildScrollView(
             child: Column(children: [
           Image.asset('assets/sports.jpeg',
@@ -50,7 +57,60 @@ class _Section extends State<Section> {
             } else {
               return (Container());
             }
-          }))
+          })),
         ])));
   }
+
+  void _showClubFormDialog() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Add Club"),
+        content: Form(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(labelText: "Club Name"),
+                // onSaved: (value) => _clubName = value,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "Category"),
+                // onSaved: (value) => _category = value,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "Meeting Day"),
+                // onSaved: (value) => _meetingDay = value,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "Advisor Name"),
+                // onSaved: (value) => _advisorName = value,
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: "Advisor Email"),
+                // onSaved: (value) => _advisorEmail = value,
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text("Save"),
+            onPressed: () {
+              // Save the form data and close the dialog
+            },
+          ),
+          ElevatedButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 }

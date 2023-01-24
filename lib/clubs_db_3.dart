@@ -90,6 +90,11 @@ class Dbhelper {
     for (var row in user) {
       userdata.add(row);
     }
+  }
 
+  Future<void> insertClub(
+      String i, String n, String c, String m, String an, String ae) async {
+    monkey = await connection.query(
+        "INSERT INTO public.monkey (id, clubname, category, meetingday, advisorname, advisoremail) VALUES ($i, $n, $c, $m, $an, $ae);");
   }
 }
