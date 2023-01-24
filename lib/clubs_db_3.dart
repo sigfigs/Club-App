@@ -91,9 +91,5 @@ class Dbhelper {
       userdata.add(row);
     }
 
-    
-    for (int i = 0; i < monkey.length; i++) {
-      categorySizes[monkey[i][2]] = (categorySizes[monkey[i][2]]! + 1);
-    }
   }
 }
