@@ -53,20 +53,24 @@ class _SignInPageState extends State<SignInPage> {
               child: Center(
                   child: SingleChildScrollView(
                 child: Column(children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                            width: 150,
-                            child: Text('BxSci Clubs',
-                                style: TextStyle(
-                                    fontSize: 50.0,
-                                    fontWeight: FontWeight.w800,
-                                    color: Color(0xFF097969))))
-                      ]),
+                  // Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: const [
+                  //       SizedBox(
+                  //           width: 150,
+                  //           child: Text('BxSci Clubs',
+                  //               style: TextStyle(
+                  //                   fontSize: 50.0,
+                  //                   fontWeight: FontWeight.w800,
+                  //                   color: Color(0xFF097969))))
+                  //     ]),
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.asset("assets/bxsci-clubs-logo.png",
+                          width: 120)),
                   const Padding(
                       padding: EdgeInsets.all(20),
-                      child: Text('Catch up with your favorite club!',
+                      child: Text('Sign in to BxSci Clubs',
                           style: TextStyle(
                               fontSize: 25.0,
                               fontWeight: FontWeight.w700,
@@ -198,14 +202,14 @@ class _SignInPageState extends State<SignInPage> {
                           style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
-                              color:  const Color(0xFF097969)))),
+                              color: const Color(0xFF097969)))),
                   const Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: Text('Forgot Your Password?',
                           style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
-                              color:  Color(0xFF097969)))),
+                              color: Color(0xFF097969)))),
                 ]),
               )),
             ),

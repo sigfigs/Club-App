@@ -36,7 +36,7 @@ class _ClubHomeState extends State<ClubHome> {
             ]),
         body: Container(
             margin: EdgeInsets.all(20.0),
-            child: clubDetails("assets/bxscilogo.jpeg")));
+            child: clubDetails("assets/bxsci-clubs-logo.png")));
   }
 }
 
@@ -68,7 +68,7 @@ Widget clubDetails(String imagePATH) {
                   tileColor: Colors.grey[50],
                   leading: ClipRRect(
                       borderRadius: BorderRadius.circular(50.0),
-                      child: Image.asset("assets/bxscilogo.jpeg")),
+                      child: Image.asset("assets/bxsci-clubs-logo.png")),
                   title: Text('One-line with leading widget'),
                   subtitle: Text('Here is a second line'),
                 )));
@@ -76,7 +76,7 @@ Widget clubDetails(String imagePATH) {
       SizedBox(height: 25),
       Text("Related Clubs", style: TextStyle(fontWeight: FontWeight.bold)),
       SizedBox(height: 25),
-      buildClubs()
+      ClubRow()
     ],
   ));
 }

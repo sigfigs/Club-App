@@ -6,7 +6,11 @@ import 'signin.dart';
 class Section extends StatefulWidget {
   final String sectionName;
   final String sectionIcon;
-  const Section({required this.sectionName, required this.sectionIcon});
+  final String sectionBG;
+  const Section(
+      {required this.sectionName,
+      required this.sectionIcon,
+      required this.sectionBG});
 
   @override
   State<Section> createState() => _Section();
@@ -40,7 +44,7 @@ class _Section extends State<Section> {
             : null,
         body: SingleChildScrollView(
             child: Column(children: [
-          Image.asset('assets/sports.jpeg',
+          Image.asset(widget.sectionBG,
               fit: BoxFit.fill, height: height / 2.5, width: width),
           Padding(
               padding: EdgeInsets.all(15),

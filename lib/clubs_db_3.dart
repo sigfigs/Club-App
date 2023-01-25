@@ -82,9 +82,10 @@ class Dbhelper {
     await connection.execute(
         "INSERT INTO public.monkey VALUES ('$i', '$n', '$c', '$m', '$an', '$ae');");
   }
+
   Future<void> insertPerson(
-      String i, String n, String c, String m, String an, String ae) async {
+      String i, String o, String e, String m, String an, String ae) async {
     await connection.execute(
-        "INSERT INTO public.monkey VALUES ('$i', '$n', '$c', '$m', '$an', '$ae');");
+        "INSERT INTO public.usertable VALUES ('$i', '$o', '$e', '$m', '$an', '$ae');");
   }
 }

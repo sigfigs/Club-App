@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
                         fontSize: 30,
                       )),
                   SizedBox(height: 25),
-                  buildClubs(),
+                  ClubRow(),
 
                   //popular clubs
                   SizedBox(height: 30),
@@ -78,14 +78,17 @@ class _HomeState extends State<Home> {
                         fontSize: 30,
                       )),
                   SizedBox(height: 25),
-                  buildClubs(),
+                  ClubRow(),
                 ])))));
   }
 }
 
 class SectionTab extends StatefulWidget {
+  final String tabBG;
+  final String tabIcon;
   final String tabName;
-  const SectionTab({required this.tabName});
+  const SectionTab(
+      {required this.tabName, required this.tabIcon, required this.tabBG});
   @override
   State<SectionTab> createState() => _SectionTabState();
 }
@@ -100,7 +103,8 @@ class _SectionTabState extends State<SectionTab> {
               new MaterialPageRoute(
                   builder: (context) => Section(
                       sectionName: widget.tabName,
-                      sectionIcon: "assets/sports.jpeg")));
+                      sectionIcon: widget.tabIcon,
+                      sectionBG: widget.tabBG)));
         }),
         child: Container(
             child: Card(
@@ -119,8 +123,7 @@ class _SectionTabState extends State<SectionTab> {
                               children: [
                                 ClipRRect(
                                     borderRadius: BorderRadius.circular(50.0),
-                                    child:
-                                        Image.asset("assets/bxscilogo.jpeg")),
+                                    child: Image.asset(widget.tabIcon)),
                                 SizedBox(height: 10),
                                 Text(widget.tabName,
                                     maxLines: 1,
@@ -132,53 +135,130 @@ class _SectionTabState extends State<SectionTab> {
   }
 }
 
+class ClubRow extends StatefulWidget {
+  const ClubRow({super.key});
+
+  @override
+  State<ClubRow> createState() => _ClubRow();
+}
+
+class _ClubRow extends State<ClubRow> {
+  final List _items = const [
+    ClubCard(
+      clubName: "Filler Club",
+      clubDay: "Filler Day",
+      clubAdvisor: "Filler Advisor",
+    ),
+    ClubCard(
+      clubName: "Filler Club",
+      clubDay: "Filler Day",
+      clubAdvisor: "Filler Advisor",
+    ),
+    ClubCard(
+      clubName: "Filler Club",
+      clubDay: "Filler Day",
+      clubAdvisor: "Filler Advisor",
+    )
+  ];
+  @override
+  Widget build(BuildContext context) {
+    bool isDeleteButtonVisible = false;
+    int deleteButtonIndex = 0;
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _items.length,
+        itemBuilder: ((context, index) {
+          return Stack(children: <Widget>[
+            InkWell(
+              onLongPress: () {
+                setState(() {
+                  isDeleteButtonVisible = true;
+                  deleteButtonIndex = index;
+                });
+              },
+              child: _items[index],
+            ),
+            isDeleteButtonVisible
+                ? Positioned(
+                    left: 0,
+                    top: 0,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _items.removeAt(deleteButtonIndex);
+                          isDeleteButtonVisible = false;
+                        });
+                      },
+                    ),
+                  )
+                : Container()
+          ]);
+        }));
+  }
+}
+
 Widget buildSections() {
   return (SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SectionTab(tabName: "Athletics"),
-          SectionTab(tabName: "Careers"),
-          SectionTab(tabName: "Cultural/Religious"),
-          SectionTab(tabName: "Education/Discussion"),
-          SectionTab(tabName: "Games"),
-          SectionTab(tabName: "Hobbies"),
-          SectionTab(tabName: "Arts"),
-          SectionTab(tabName: "Publications"),
-          SectionTab(tabName: "Science"),
-          SectionTab(tabName: "Volunteer/Activisim"),
-          SectionTab(tabName: "Activities"),
+        children: const [
+          SectionTab(
+            tabName: "Athletics",
+            tabBG: "assets/bg/athletics-bg.png",
+            tabIcon: "assets/icons/athletics-icon.png",
+          ),
+          // SectionTab(
+          //   tabName: "Careers",
+          //   tabBG: "assets/bg/career-bg.png",
+          //   tabIcon: "assets/icons/careers-icon.png",
+          // ),
+          // SectionTab(
+          //     tabName: "Cultural/Religious",
+          //     tabBG: "assets/bg/culture-religion-bg.png",
+          //     tabIcon: "assets/icons/culture-icon.png"),
+          // SectionTab(
+          //     tabName: "Education/Discussion",
+          //     tabBG: "assets/bg/education-bg.png",
+          //     tabIcon: "assets/icons/education-icon.png"),
+          // SectionTab(
+          //     tabName: "Games",
+          //     tabBG: "assets/bg/games-bg.png",
+          //     tabIcon: "assets/icons/games-icon.png"),
+          // SectionTab(
+          //     tabName: "Hobbies",
+          //     tabBG: "assets/bg/hobbies-bg.png",
+          //     tabIcon: "assets/icons/hobby-icon.png"),
+          // SectionTab(
+          //   tabName: "Arts",
+          //   tabBG: "assets/bg/arts-bg.png",
+          //   tabIcon: "assets/icons/arts-icon.png",
+          // ),
+          // SectionTab(
+          //     tabName: "Publications",
+          //     tabBG: "assets/bg/publication-bg.png",
+          //     tabIcon: "assets/icons/publications-icon.png"),
+          // SectionTab(
+          //   tabName: "Science",
+          //   tabBG: "assets/bg/science-bg.png",
+          //   tabIcon: "assets/icons/science-icon.png",
+          // ),
+          // SectionTab(
+          //   tabName: "Volunteer/Activism",
+          //   tabBG: "assets/bg/activities-bg.png",
+          //   tabIcon: "assets/icons/volunteer-icon.png",
+          // ),
+          // SectionTab(
+          //   tabName: "Activities",
+          //   tabBG: "assets/bg/activities-bg.png",
+          //   tabIcon: "assets/icons/activities-icon.png",
+          // ),
         ],
       )));
-}
-
-// Widget buildMyClubs() {
-//   return (
-//     for(int i = 0; i < monkey.length; i++){
-//       if(userClubs.contains(monkey[i][0])){
-//         userClubsWidgets.add(
-//           ClubCard()
-//         )
-//       }
-//     }
-//   );
-// }
-
-Widget buildClubs() {
-  return (SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-          children: List.generate(
-        3,
-        ((index) {
-          return ClubCard(
-            clubName: "Filler Club",
-            clubDay: "Filler Day",
-            clubAdvisor: "Filler Advisor",
-          );
-        }),
-      ))));
 }
 
 class ClubCard extends StatefulWidget {
@@ -220,7 +300,7 @@ class _ClubCardState extends State<ClubCard> {
                       children: <Widget>[
                         ClipRRect(
                             borderRadius: BorderRadius.circular(50.0),
-                            child: Image.asset("assets/bxscilogo.jpeg",
+                            child: Image.asset("assets/bxsci-clubs-logo.png",
                                 width: 120)),
                         SizedBox(height: 20),
                         Text(widget.clubName,
