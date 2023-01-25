@@ -490,6 +490,7 @@ class _Profile extends State<Profile> {
                       Padding(
                           padding: const EdgeInsets.only(bottom: 5, top: 10),
                           child: TextFormField(
+                            maxLines: 5,
                             controller: nameController1,
                             decoration: const InputDecoration(
                                 fillColor: Colors.white,

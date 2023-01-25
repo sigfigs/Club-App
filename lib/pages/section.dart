@@ -110,6 +110,7 @@ class _Section extends State<Section> {
                 _formKey.currentState!.save();
                 db.insertClub(monkey.length.toString(), clubName,
                     widget.sectionName, meetingDay, advisorName, advisorEmail);
+                Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
