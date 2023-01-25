@@ -73,13 +73,14 @@ class _Section extends State<Section> {
     String meetingDay = "";
     String advisorName = "";
     String advisorEmail = "";
-
+    final _formKey = GlobalKey<FormState>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Add Club"),
           content: Form(
+            key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -106,6 +107,7 @@ class _Section extends State<Section> {
             ElevatedButton(
               child: Text("Save"),
               onPressed: () {
+                _formKey.currentState!.save();
                 db.insertClub(monkey.length.toString(), clubName,
                     widget.sectionName, meetingDay, advisorName, advisorEmail);
               },
