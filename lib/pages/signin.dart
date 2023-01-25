@@ -192,20 +192,20 @@ class _SignInPageState extends State<SignInPage> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white)),
                           ))),
-                  Padding(
+                  const Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: Text('Forgot Your Email?',
                           style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
-                              color: Colors.grey[400]))),
-                  Padding(
+                              color:  const Color(0xFF097969)))),
+                  const Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       child: Text('Forgot Your Password?',
                           style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
-                              color: Colors.grey[400]))),
+                              color:  Color(0xFF097969)))),
                 ]),
               )),
             ),

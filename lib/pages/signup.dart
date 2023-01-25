@@ -18,7 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
         appBar: AppBar(
           title:
-              Text('Sign Up', style: Theme.of(context).textTheme.displayLarge),
+              const Text('Sign Up'),
           backgroundColor: const Color(0xFF097969),
         ),
         body: Padding(
@@ -27,8 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 key: _formKey,
                 child: SingleChildScrollView(
                     child: Column(children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    const SizedBox(
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+                    SizedBox(
                       width: 150,
                       height: 150,
                       // child: Image(
@@ -38,20 +38,23 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       width: 150,
                       child: Text('BxSci Clubs',
-                          style: Theme.of(context).textTheme.titleLarge),
+                                    style: TextStyle(
+                                    fontSize: 40.0,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xFF097969))),
                     )
                   ]),
                   Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'School Email',
                               hintText: 'Enter your Email',
@@ -65,16 +68,16 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                           ))),
                   Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'Full Name',
                               hintText: 'Enter your Full Name',
@@ -87,17 +90,17 @@ class _SignUpPageState extends State<SignUpPage> {
                               return null;
                             },
                           ))),
-                  Padding(
-                      padding: const EdgeInsets.all(10),
+                   Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'Grad Year',
                               hintText: 'Enter your Graduation Year',
@@ -110,17 +113,17 @@ class _SignUpPageState extends State<SignUpPage> {
                               return null;
                             },
                           ))),
-                  Padding(
-                      padding: const EdgeInsets.all(10),
+                   Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'OSIS Number',
                               hintText: 'Enter your OSIS',
@@ -134,16 +137,16 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                           ))),
                   Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'Password',
                               hintText: 'Enter your Password',
@@ -156,17 +159,17 @@ class _SignUpPageState extends State<SignUpPage> {
                               return null;
                             },
                           ))),
-                  Padding(
-                      padding: const EdgeInsets.all(10),
+                   Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'Club',
                               hintText: 'Enter your Club',
@@ -180,16 +183,16 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                           ))),
                   Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'Phone Number',
                               hintText: 'Enter your Phone Number',
@@ -202,17 +205,17 @@ class _SignUpPageState extends State<SignUpPage> {
                               return null;
                             },
                           ))),
-                  Padding(
-                      padding: const EdgeInsets.all(10),
+                   Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          height: height,
+                          height: height * 1.2,
                           width: width,
                           child: TextFormField(
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 25, horizontal: 10),
+                                  vertical: 20, horizontal: 10),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                               labelText: 'Club Position',
                               hintText: 'Enter your Club Position',
@@ -239,9 +242,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 _formKey.currentState!.save();
                               }
                             },
-                            child: Text('SIGN UP',
-                                style:
-                                    Theme.of(context).textTheme.displayLarge),
+                            child: const Text('SIGN UP',
+                                ),
                           ))),
                 ])))));
   }
