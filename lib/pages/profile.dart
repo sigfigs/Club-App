@@ -10,33 +10,23 @@ class Profile extends StatefulWidget {
 }
 
 List c = [
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp,
-  temp
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac,
+  ac
 ];
-
-User temp = User(
-    ['Muslim Club', 'Hacker Jeffrey Li Club'],
-    'bedir@bxscience.edu',
-    'ravnoorbediis',
-    'Benjamin Chong',
-    'Admin',
-    2023,
-    221481096,
-    'My name is Ben and I like girls. Specially small girls since I am a little baby and only 3 years old inside of my body at all times');
 
 class _Profile extends State<Profile> {
   int _selectedIndex = 0;
@@ -50,8 +40,8 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var lst = [actual(width, height, temp), people(temp)];
-    var admin = temp.role == 'Admin';
+    var lst = [actual(width, height, ac), people(ac)];
+    var admin = ac.role == 'Admin';
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF097969),
@@ -71,14 +61,14 @@ class _Profile extends State<Profile> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.cake),
-                    label: 'Persons',
+                    label: 'All People',
                   ),
                 ],
               )
             : null);
   }
 
-  Widget people(User temp) {
+  Widget people(User ac) {
     return ListView.builder(
       itemCount: c.length,
       itemBuilder: (context, index) {
@@ -91,7 +81,7 @@ class _Profile extends State<Profile> {
     );
   }
 
-  Widget actual(var height, var width, User temp) {
+  Widget actual(var height, var width, User ac) {
     return SingleChildScrollView(
         child: Column(children: [
       Stack(alignment: Alignment.center, children: [
@@ -114,22 +104,22 @@ class _Profile extends State<Profile> {
                   Column(
                     children: [
                       GestureDetector(
-                          onTap: (() => _displayNameDialog(context, temp)),
-                          child: Text('${temp.name}✍️',
+                          onTap: (() => _displayNameDialog(context, ac)),
+                          child: Text('${ac.name}✍️',
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold))),
                       GestureDetector(
-                          onTap: (() => _displayEmailDialog(context, temp)),
-                          child: Text('${temp.email}✍️',
+                          onTap: (() => _displayEmailDialog(context, ac)),
+                          child: Text('${ac.email}✍️',
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold))),
                       GestureDetector(
-                          onTap: (() => _displayOsisDialog(context, temp)),
-                          child: Text('${temp.osis}✍️',
+                          onTap: (() => _displayOsisDialog(context, ac)),
+                          child: Text('${ac.osis}✍️',
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -138,7 +128,7 @@ class _Profile extends State<Profile> {
                   ),
                 ]))
       ]),
-      buildProfile(temp),
+      buildProfile(ac),
       const Divider(),
       Padding(
           padding: const EdgeInsets.all(5),
@@ -474,9 +464,8 @@ class _Profile extends State<Profile> {
         });
   }
 
-  Future<Future> _displayDialog(BuildContext context, User c) async {
+  Future<Future> _displayAboutDialog(BuildContext context, User c) async {
     TextEditingController nameController1 = TextEditingController();
-    TextEditingController nameController2 = TextEditingController();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     final formKey = GlobalKey<FormState>();
@@ -506,32 +495,11 @@ class _Profile extends State<Profile> {
                                 fillColor: Colors.white,
                                 filled: true,
                                 border: OutlineInputBorder(),
-                                labelText: 'Confirm Your Name',
+                                labelText: 'Confirm Your Details',
                                 labelStyle: TextStyle(color: Colors.black)),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Enter the new name';
-                              }
-                              return null;
-                            },
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(bottom: 5, top: 10),
-                          child: TextFormField(
-                            controller: nameController2,
-                            decoration: const InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                border: OutlineInputBorder(),
-                                labelText: 'Confirm Your Name',
-                                labelStyle: TextStyle(color: Colors.black)),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please confirm new name';
-                              }
-                              if (nameController2.text !=
-                                  nameController1.text) {
-                                return 'New name is not the same';
+                                return 'Enter the new Details';
                               }
                               return null;
                             },
@@ -551,7 +519,7 @@ class _Profile extends State<Profile> {
                 onPressed: () {
                   setState(() {
                     if (formKey.currentState!.validate()) {
-                      c.name = nameController2.text;
+                      c.info = nameController1.text;
                       Navigator.of(context).pop();
                     }
                   });
@@ -591,7 +559,7 @@ class _Profile extends State<Profile> {
         ),
         const Divider(),
         GestureDetector(
-            onTap: (() => _displayNameDialog(context, temp)),
+            onTap: (() => _displayAboutDialog(context, ac)),
             child: ListTile(
               trailing: const Icon(Icons.edit),
               tileColor: Colors.grey[50],
@@ -602,9 +570,7 @@ class _Profile extends State<Profile> {
               subtitle: Text(user.info),
             )),
         const Divider(),
-        GestureDetector(
-            onTap: (() => _displayNameDialog(context, temp)),
-            child: ListTile(
+        ListTile(
               trailing: const Icon(Icons.edit),
               tileColor: Colors.grey[50],
               contentPadding: const EdgeInsets.all(5),
@@ -612,7 +578,7 @@ class _Profile extends State<Profile> {
               title: const Text('Clubs You Joined',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(user.clubs.toString()),
-            )),
+            ),
       ],
     );
   }
