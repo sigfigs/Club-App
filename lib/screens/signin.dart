@@ -24,9 +24,10 @@ class _SignInPageState extends State<SignInPage> {
 
   var person = 0;
 
-  void login(var name, var email, var osis, var password, var usertype) {
+  void login(
+      var name, var email, var osis, var password, var usertype, var clubs) {
     ac = User(
-        ['Muslim Club', 'Hacker Jeffrey Li Club'],
+        clubs.split(' '),
         email,
         password,
         name,
@@ -159,7 +160,8 @@ class _SignInPageState extends State<SignInPage> {
                                     userdata[person][2],
                                     userdata[person][1],
                                     userdata[person][3],
-                                    userdata[person][4]);
+                                    userdata[person][4],
+                                    userdata[person][5]);
                                 _formKey.currentState!.reset();
                                 Navigator.push(
                                     context,
@@ -196,20 +198,20 @@ class _SignInPageState extends State<SignInPage> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white)),
                           ))),
-                  const Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Text('Forgot Your Email?',
                           style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
-                              color: const Color(0xFF097969)))),
-                  const Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                              color: Colors.grey[300]))),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Text('Forgot Your Password?',
                           style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xFF097969)))),
+                              color: Colors.grey[300]))),
                 ]),
               )),
             ),

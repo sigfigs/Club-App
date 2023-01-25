@@ -10,9 +10,6 @@ class User {
 
   User(this.clubs, this.email, this.password, this.name, this.role,
       this.gradyear, this.osis, this.info);
-
-  
-  
 }
 
 class Club {

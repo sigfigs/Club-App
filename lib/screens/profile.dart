@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_app_5/user.dart';
 import 'signin.dart';
+import 'package:club_app_5/clubs_db_3.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -8,25 +9,6 @@ class Profile extends StatefulWidget {
   @override
   State<Profile> createState() => _Profile();
 }
-
-List c = [
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac,
-  ac
-];
 
 class _Profile extends State<Profile> {
   int _selectedIndex = 0;
@@ -40,7 +22,7 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var lst = [actual(width, height, ac), people(ac)];
+    var lst = [actual(width, height, ac), people()];
     var admin = ac.role == 'Admin';
     return Scaffold(
         appBar: AppBar(
@@ -68,13 +50,13 @@ class _Profile extends State<Profile> {
             : null);
   }
 
-  Widget people(User ac) {
+  Widget people() {
     return ListView.builder(
-      itemCount: c.length,
+      itemCount: userdata.length,
       itemBuilder: (context, index) {
         return ListTile(
-            trailing: Icon(Icons.delete),
-            title: Text(c[index].toString(),
+            trailing: const Icon(Icons.delete),
+            title: Text(userdata[index].toString(),
                 style:
                     const TextStyle(color: Color(0xFF097969), fontSize: 15)));
       },
@@ -85,48 +67,51 @@ class _Profile extends State<Profile> {
     return SingleChildScrollView(
         child: Column(children: [
       Stack(alignment: Alignment.center, children: [
-        Image.asset('assets/back.png',
-            fit: BoxFit.fill, height: height / 2, width: width),
+        // Image.asset('assets/back.png',
+        //     fit: BoxFit.fill, height: height / 2, width: width),
+        Container(
+          width: width,
+          height: height / 2,
+          decoration: BoxDecoration(color: Colors.grey[200]),
+        ),
         Positioned(
             top: height / 14,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey.shade800,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: Image.asset("assets/funnymonkeylips.png")))),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.grey.shade800,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.0),
-                              child:
-                                  Image.asset("assets/funnymonkeylips.png")))),
-                  Column(
-                    children: [
-                      GestureDetector(
-                          onTap: (() => _displayNameDialog(context, ac)),
-                          child: Text('${ac.name}✍️',
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold))),
-                      GestureDetector(
-                          onTap: (() => _displayEmailDialog(context, ac)),
-                          child: Text('${ac.email}✍️',
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold))),
-                      GestureDetector(
-                          onTap: (() => _displayOsisDialog(context, ac)),
-                          child: Text('${ac.osis}✍️',
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold))),
-                    ],
-                  ),
-                ]))
+                  GestureDetector(
+                      onTap: (() => _displayNameDialog(context, ac)),
+                      child: Text(ac.name,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500))),
+                  GestureDetector(
+                      onTap: (() => _displayEmailDialog(context, ac)),
+                      child: Text(ac.email,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500))),
+                  GestureDetector(
+                      onTap: (() => _displayOsisDialog(context, ac)),
+                      child: Text(ac.osis.toString(),
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500))),
+                ],
+              ),
+            ]))
       ]),
       buildProfile(ac),
       const Divider(),
@@ -143,8 +128,8 @@ class _Profile extends State<Profile> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      new MaterialPageRoute(
-                          builder: (context) => SignInPage()));
+                       MaterialPageRoute(
+                          builder: (context) => const SignInPage()));
                 },
                 child: const Text('Sign Out',
                     style: TextStyle(
@@ -572,15 +557,23 @@ class _Profile extends State<Profile> {
             )),
         const Divider(),
         ListTile(
-              trailing: const Icon(Icons.edit),
-              tileColor: Colors.grey[50],
-              contentPadding: const EdgeInsets.all(5),
-              leading: const Icon(Icons.person),
-              title: const Text('Clubs You Joined',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(user.clubs.toString()),
-            ),
+          tileColor: Colors.grey[50],
+          contentPadding: const EdgeInsets.all(5),
+          leading: const Icon(Icons.person),
+          title: const Text('Clubs You Joined',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text(builtjitclub().toString()),
+        ),
       ],
     );
   }
+}
+
+List<String> builtjitclub() {
+  List<String> clubs = [];
+  for (int i = 0; i < ac.clubs.length; i++) {
+    var thing = monkey[int.parse(ac.clubs[i]) + 1];
+    clubs.add(thing[1]);
+  }
+  return clubs;
 }

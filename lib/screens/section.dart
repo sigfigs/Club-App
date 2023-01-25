@@ -8,7 +8,7 @@ class Section extends StatefulWidget {
   final String sectionIcon;
   final String sectionBG;
   const Section(
-      {required this.sectionName,
+      {super.key, required this.sectionName,
       required this.sectionIcon,
       required this.sectionBG});
 
@@ -32,14 +32,14 @@ class _Section extends State<Section> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-            backgroundColor: Color(0xFF097969),
+            backgroundColor: const Color(0xFF097969),
             title: Text(widget.sectionName),
             centerTitle: true),
         floatingActionButton: ac.role == 'Admin'
             ? FloatingActionButton(
                 onPressed: _showClubFormDialog,
-                child: Icon(Icons.add),
                 elevation: 10,
+                child: const Icon(Icons.add),
               )
             : null,
         body: SingleChildScrollView(
@@ -47,7 +47,7 @@ class _Section extends State<Section> {
           Image.asset(widget.sectionBG,
               fit: BoxFit.fill, height: height / 2.5, width: width),
           Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(30),
               child: Align(
                   alignment: Alignment.center,
                   child: Text('All ${widget.sectionName} Clubs',
@@ -62,11 +62,13 @@ class _Section extends State<Section> {
     for (int i = 0; i < monkey.length; i++) {
       if (monkey[i][2] == widget.sectionName) {
         validClubs.add(Padding(
-            padding: EdgeInsets.only(right: 20, left: 20),
+            padding: const EdgeInsets.only(right: 20, left: 20),
             child: ClubCard(
-                clubName: monkey[i][1],
-                clubDay: monkey[i][3],
-                clubAdvisor: monkey[i][4])));
+              clubName: monkey[i][1],
+              clubDay: monkey[i][3],
+              clubAdvisor: monkey[i][4],
+              clubCategory: monkey[i][2],
+            )));
       }
     }
     return validClubs;
@@ -77,31 +79,31 @@ class _Section extends State<Section> {
     String meetingDay = "";
     String advisorName = "";
     String advisorEmail = "";
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Add Club"),
+          title: const Text("Add Club"),
           content: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Club Name"),
+                  decoration: const InputDecoration(labelText: "Club Name"),
                   onSaved: (value) => clubName = value.toString(),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Meeting Day"),
+                  decoration: const InputDecoration(labelText: "Meeting Day"),
                   onSaved: (value) => meetingDay = value.toString(),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Advisor Name"),
+                  decoration: const InputDecoration(labelText: "Advisor Name"),
                   onSaved: (value) => advisorName = value.toString(),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: "Advisor Email"),
+                  decoration: const InputDecoration(labelText: "Advisor Email"),
                   onSaved: (value) => advisorEmail = value.toString(),
                 ),
               ],
@@ -109,16 +111,16 @@ class _Section extends State<Section> {
           ),
           actions: <Widget>[
             ElevatedButton(
-              child: Text("Save"),
+              child: const Text("Save"),
               onPressed: () {
-                _formKey.currentState!.save();
+                formKey.currentState!.save();
                 db.insertClub(monkey.length.toString(), clubName,
                     widget.sectionName, meetingDay, advisorName, advisorEmail);
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
               onPressed: () {
                 Navigator.pop(context);
               },
