@@ -160,7 +160,7 @@ class _Profile extends State<Profile> {
                 'Change Your Information'),
             content: SizedBox(
                 width: width / 2,
-                height: height / 6,
+                height: height / 4,
                 child: Form(
                     key: formKey,
                     child: Column(children: <Widget>[
@@ -263,7 +263,7 @@ class _Profile extends State<Profile> {
                 'Change Your Information'),
             content: SizedBox(
                 width: width / 2,
-                height: height / 6,
+                height: height / 4,
                 child: Form(
                     key: formKey,
                     child: Column(children: <Widget>[
@@ -366,7 +366,7 @@ class _Profile extends State<Profile> {
                 'Change Your Information'),
             content: SizedBox(
                 width: width / 2,
-                height: height / 6,
+                height: height / 4,
                 child: Form(
                     key: formKey,
                     child: Column(children: <Widget>[
@@ -468,7 +468,7 @@ class _Profile extends State<Profile> {
                 'Change Your Information'),
             content: SizedBox(
                 width: width / 2,
-                height: height / 6,
+                height: height / 4,
                 child: Form(
                     key: formKey,
                     child: Column(children: <Widget>[
