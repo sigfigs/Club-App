@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:club_app_5/user.dart';
 import 'signin.dart';
 import 'package:club_app_5/clubs_db_3.dart';
+import 'home.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -128,7 +129,7 @@ class _Profile extends State<Profile> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                       MaterialPageRoute(
+                      MaterialPageRoute(
                           builder: (context) => const SignInPage()));
                 },
                 child: const Text('Sign Out',
@@ -556,14 +557,13 @@ class _Profile extends State<Profile> {
               subtitle: Text(user.info),
             )),
         const Divider(),
-        ListTile(
-          tileColor: Colors.grey[50],
-          contentPadding: const EdgeInsets.all(5),
-          leading: const Icon(Icons.person),
-          title: const Text('Clubs You Joined',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(builtjitclub().toString()),
-        ),
+        const Text("My Clubs",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+            )),
+            buildMyClubs()
       ],
     );
   }
