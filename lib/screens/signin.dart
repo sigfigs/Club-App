@@ -54,17 +54,6 @@ class _SignInPageState extends State<SignInPage> {
               child: Center(
                   child: SingleChildScrollView(
                 child: Column(children: [
-                  // Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: const [
-                  //       SizedBox(
-                  //           width: 150,
-                  //           child: Text('BxSci Clubs',
-                  //               style: TextStyle(
-                  //                   fontSize: 50.0,
-                  //                   fontWeight: FontWeight.w800,
-                  //                   color: Color(0xFF097969))))
-                  //     ]),
                   ClipRRect(
                       borderRadius: BorderRadius.circular(50.0),
                       child: Image.asset("assets/bxsci-clubs-logo.png",

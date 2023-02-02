@@ -8,7 +8,8 @@ class Section extends StatefulWidget {
   final String sectionIcon;
   final String sectionBG;
   const Section(
-      {super.key, required this.sectionName,
+      {super.key,
+      required this.sectionName,
       required this.sectionIcon,
       required this.sectionBG});
 
@@ -44,8 +45,7 @@ class _Section extends State<Section> {
             : null,
         body: SingleChildScrollView(
             child: Column(children: [
-          Image.asset(widget.sectionBG,
-              fit: BoxFit.fill, height: height / 2.5, width: width),
+          Image.asset(widget.sectionBG, fit: BoxFit.fill),
           Padding(
               padding: const EdgeInsets.all(30),
               child: Align(
