@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'clubhome.dart';
 import 'home.dart';
+import 'dart:ui';
 import 'signin.dart';
 
 class Discussion extends StatefulWidget {
@@ -20,9 +21,99 @@ class Discussion extends StatefulWidget {
 }
 
 class _Discussion extends State<Discussion> {
+  DateTime now = DateTime.now();
+  final formKey = new GlobalKey<FormState>();
+  TextEditingController controller = TextEditingController();
+  List<Post> discuss = [
+    Post(author: 'Benjy', info: 'I like benjy and little kid', timestamp: 'jit')
+  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        _showNewTaskDialog();
+      }),
+      body: ListView.builder(
+        itemCount: discuss.length,
+        itemBuilder: (BuildContext context, index) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+            child: comment(discuss[index])
+          );
+        }));
+  }
+
+  Widget comment(Post post) {
+    return Card(
+        elevation: 3,
+        child: Column(children: [
+          Padding(
+            padding: EdgeInsets.all(5),
+            child: ListTile(
+            leading: Icon(Icons.person),
+            trailing: Icon(Icons.menu),
+            title: Text(post.author),
+            subtitle: Text('Posted at:  ${post.timestamp}'),
+          )),
+          Text(post.info)
+        ]));
+  }
+
+  void _showNewTaskDialog() {
+    controller.clear();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Post a New Comment"),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextFormField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    labelText: "Comment Details",
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter your comment.";
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  setState(() {
+                    discuss.add(Post(
+                        info: controller.text,
+                        author: ac.name,
+                        timestamp:
+                            now.hour.toString() + ':' + now.minute.toString()));
+                    Navigator.of(context).pop();
+                  });
+                }
+              },
+              child: Text("Add"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
