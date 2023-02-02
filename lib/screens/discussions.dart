@@ -25,3 +25,11 @@ class _Discussion extends State<Discussion> {
     return Scaffold();
   }
 }
+
+class Post {
+  String info;
+  String author;
+  String timestamp;
+
+  Post({required this.info, required this.author, required this.timestamp});
+}
