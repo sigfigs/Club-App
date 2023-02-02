@@ -533,7 +533,7 @@ class _Profile extends State<Profile> {
   }
 
   Widget buildProfile(User user) {
-    return Column(
+    return ListView(
       children: [
         const Divider(),
         ListTile(
@@ -563,7 +563,7 @@ class _Profile extends State<Profile> {
               fontWeight: FontWeight.bold,
               fontSize: 30,
             )),
-            buildMyClubs()
+            buildClubsDiff()
       ],
     );
   }
@@ -576,4 +576,23 @@ List<String> builtjitclub() {
     clubs.add(thing[1]);
   }
   return clubs;
+}
+
+Widget buildClubsDiff() {
+  List<Widget> clubs = [];
+  for (int i = 0; i < ac.clubs.length; i++) {
+    var thing = monkey[int.parse(ac.clubs[i]) + 1];
+    clubs.add(Container(
+        margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+        child: Card(
+            elevation: 3,
+            child: ListTile(
+                tileColor: Colors.grey[50],
+                leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Image.asset("assets/bxsci-clubs-logo.png")),
+                title: Text(thing[1]),
+                subtitle: Text(thing[4])))));
+  }
+  return Column(children: clubs);
 }
