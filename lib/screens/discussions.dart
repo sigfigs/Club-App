@@ -6,10 +6,7 @@ import 'signin.dart';
 
 class Discussion extends StatefulWidget {
   final String clubName;
-  const Discussion(
-      {super.key,
-      required this.clubName
-      });
+  const Discussion({super.key, required this.clubName});
 
   @override
   State<Discussion> createState() => _Discussion();
@@ -25,27 +22,29 @@ class _Discussion extends State<Discussion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-            backgroundColor: const Color(0xFF097969),
-            title: Text(widget.clubName),
-            centerTitle: true,
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        _showNewTaskDialog();
-      }),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-      const Text("Overview", style: TextStyle(fontWeight: FontWeight.bold)),
-      ListView.builder(
-        itemCount: discuss.length,
-        itemBuilder: (BuildContext context, index) {
-          return Padding(
-            padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
-            child: comment(discuss[index])
-          );
-        })]));
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF097969),
+          title: Text(widget.clubName),
+          centerTitle: true,
+        ),
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          _showNewTaskDialog();
+        }),
+        body: SingleChildScrollView(
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Text("Overview", style: TextStyle(fontWeight: FontWeight.bold)),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: discuss.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, index) {
+                return Padding(
+                    padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+                    child: comment(discuss[index]));
+              })
+        ])));
   }
 
   Widget comment(Post post) {
@@ -53,14 +52,16 @@ class _Discussion extends State<Discussion> {
         elevation: 3,
         child: Column(children: [
           Padding(
-            padding: EdgeInsets.all(5),
-            child: ListTile(
-            leading: Icon(Icons.person),
-            trailing: Icon(Icons.menu),
-            title: Text(post.author),
-            subtitle: Text('Posted at:  ${post.timestamp}'),
-          )),
-          Text(post.info)
+              padding: EdgeInsets.all(5),
+              child: ListTile(
+                leading: Icon(Icons.person),
+                trailing: Icon(Icons.menu),
+                title: Text(post.author),
+                subtitle: Text('Posted at:  ${post.timestamp}'),
+              )),
+           Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
+              child: Text(post.info, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
         ]));
   }
 

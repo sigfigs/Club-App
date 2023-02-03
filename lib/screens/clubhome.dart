@@ -3,6 +3,7 @@ import 'package:club_app_5/clubs_db_3.dart';
 import 'home.dart';
 import 'dart:math';
 import 'profile.dart';
+import 'discussions.dart';
 
 class ClubHome extends StatefulWidget {
   final String clubName;
@@ -56,7 +57,14 @@ class _ClubHomeState extends State<ClubHome> {
             ]),
         body: Container(
             margin: const EdgeInsets.all(20.0),
-            child: clubDetails("assets/bxsci-clubs-logo.png")));
+            child: clubDetails("assets/bxsci-clubs-logo.png")),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.message),
+              onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Discussion(clubName: widget.clubName)))),
+            );
   }
 
   Widget clubDetails(String image) {
