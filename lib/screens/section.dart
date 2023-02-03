@@ -18,13 +18,13 @@ class Section extends StatefulWidget {
 }
 
 class _Section extends State<Section> {
-  var db;
-  @override
-  void initState() {
-    super.initState();
-    db = Dbhelper();
-    db.initDb();
-  }
+  // var db;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   db = Dbhelper();
+  //   db.initDb();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +68,7 @@ class _Section extends State<Section> {
               clubDay: monkey[i][3],
               clubAdvisor: monkey[i][4],
               clubCategory: monkey[i][2],
+              clubID: monkey[i][0]
             )));
       }
     }
@@ -75,10 +76,10 @@ class _Section extends State<Section> {
   }
 
   void _showClubFormDialog() {
-    String clubName = "";
-    String meetingDay = "";
-    String advisorName = "";
-    String advisorEmail = "";
+    String clubName = "default";
+    String meetingDay = "default";
+    String advisorName = "default";
+    String advisorEmail = "default";
     final formKey = GlobalKey<FormState>();
     showDialog(
       context: context,

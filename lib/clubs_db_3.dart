@@ -45,17 +45,36 @@ class Dbhelper {
     for (var row in user) {
       userdata.add(row);
     }
+
   }
 
   Future<void> insertClub(
       String i, String n, String c, String m, String an, String ae) async {
     await connection.execute(
-        "INSERT INTO public.monkey VALUES ('$i', '$n', '$c', '$m', '$an', '$ae');");
+        "INSERT INTO public.clubs VALUES ('$i', '$n', '$c', '$m', '$an', '$ae');");
+  }
+
+  Future<void> deleteClub(
+      String clubID) async {
+    await connection.execute(
+        "DELETE FROM public.clubs WHERE id = '$clubID';");
+  }
+
+  Future<void> joinClub(
+      String newClubID, String userID) async {
+    await connection.execute(
+        "UPDATE public.clubs SET clubs = concat(clubs, ' $newClubID') WHERE id = '$userID';");
+  }
+
+  Future<void> leaveClub(
+      String newClubID, String userID) async {
+    await connection.execute(
+        "UPDATE public.clubs SET clubs = concat(clubs, ' $newClubID') WHERE id = '$userID';");
   }
 
   Future<void> insertPerson(
       String i, String o, String e, String m, String an, String ae) async {
     await connection.execute(
-        "INSERT INTO public.usertable VALUES ('$i', '$o', '$e', '$m', '$an', '$ae');");
+        "INSERT INTO public.userdata VALUES ('$i', '$o', '$e', '$m', '$an', '$ae');");
   }
 }

@@ -1,9 +1,7 @@
-import 'package:club_app_5/screens/discussions.dart';
 import 'package:flutter/material.dart';
 import 'package:club_app_5/clubs_db_3.dart';
 import 'home.dart';
 import 'dart:math';
-import 'discussions.dart';
 import 'profile.dart';
 
 class ClubHome extends StatefulWidget {
@@ -11,62 +9,54 @@ class ClubHome extends StatefulWidget {
   final String clubDay;
   final String clubAdvisor;
   final String clubCategory;
+  final String clubID;
   const ClubHome(
       {super.key,
       required this.clubName,
       required this.clubDay,
       required this.clubAdvisor,
-      required this.clubCategory});
+      required this.clubCategory,
+      required this.clubID});
 
   @override
   State<ClubHome> createState() => _ClubHomeState();
 }
 
 class _ClubHomeState extends State<ClubHome> {
-  var db;
-  @override
-  void initState() {
-    super.initState();
-    db = Dbhelper();
-    db.initDb();
-  }
+  // var db;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   db = Dbhelper();
+  //   db.initDb();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-          backgroundColor: const Color(0xFF097969),
-          title: Text(widget.clubName),
-          centerTitle: true,
-          actions: <Widget>[
-            Container(
-                margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
-                child: GestureDetector(
-                  onTap: (() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Profile()));
-                  }),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Image.asset("assets/funnymonkeylips.png")),
-                ))
-          ]),
-      body: Container(
-          margin: const EdgeInsets.all(20.0),
-          child: clubDetails("assets/bxsci-clubs-logo.png")),
-      floatingActionButton: FloatingActionButton(
-        elevation: 3,
-        child: const Icon(Icons.message),
-        onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Discussion(clubName: widget.clubName)));
-      }),
-    );
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+            backgroundColor: const Color(0xFF097969),
+            title: Text(widget.clubName),
+            centerTitle: true,
+            actions: <Widget>[
+              Container(
+                  margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                  child: GestureDetector(
+                    onTap: (() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Profile()));
+                    }),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Image.asset("assets/funnymonkeylips.png")),
+                  ))
+            ]),
+        body: Container(
+            margin: const EdgeInsets.all(20.0),
+            child: clubDetails("assets/bxsci-clubs-logo.png")));
   }
 
   Widget clubDetails(String image) {
@@ -78,9 +68,11 @@ class _ClubHomeState extends State<ClubHome> {
         const SizedBox(height: 100),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(3, (index) {
-            return buildTag(widget.clubDay);
-          }),
+          children: [
+            buildTag(widget.clubDay),
+            buildTag(widget.clubCategory),
+            buildTag(widget.clubID),
+          ],
         ),
         const SizedBox(height: 50),
         const Text("Overview", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -111,24 +103,27 @@ class _ClubHomeState extends State<ClubHome> {
         const SizedBox(height: 25),
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(children: buildRelatedClubs(widget.clubCategory)))
+            child: Row(
+                children:
+                    buildRelatedClubs(widget.clubCategory, widget.clubID)))
       ],
     ));
   }
 }
 
-List<Widget> buildRelatedClubs(String category) {
+List<Widget> buildRelatedClubs(String category, String clubID) {
   List<Widget> validClubs = [];
-  for (int i = 0; i < monkey.length; i++) {
-    if (monkey[i][2] == category) {
+  for (int i = 1; i < monkey.length; i++) {
+    if (monkey[i][2] == category && monkey[i][0] != clubID) {
+      // debugPrint(monkey[i][0] + " parameter id:$clubID");
       validClubs.add(Padding(
           padding: const EdgeInsets.only(right: 20, left: 20),
           child: ClubCard(
-            clubName: monkey[i][1],
-            clubDay: monkey[i][3],
-            clubAdvisor: monkey[i][4],
-            clubCategory: category,
-          )));
+              clubName: monkey[i][1],
+              clubDay: monkey[i][3],
+              clubAdvisor: monkey[i][4],
+              clubCategory: category,
+              clubID: monkey[i][0])));
     }
   }
   Random random = Random();
@@ -137,9 +132,11 @@ List<Widget> buildRelatedClubs(String category) {
     int rand = random.nextInt(validClubs.length);
     ratings.add(rand);
   }
+  // print(ratings);
 
   List<Widget> retClubs = [];
   for (int i = 0; i < ratings.length; i++) {
+    // print("ratings.elementAt(i): ${ratings.elementAt(i)}");
     retClubs.add(Padding(
         padding: const EdgeInsets.only(right: 20, left: 20),
         child: ClubCard(
@@ -147,6 +144,7 @@ List<Widget> buildRelatedClubs(String category) {
           clubDay: monkey[ratings.elementAt(i)][3],
           clubAdvisor: monkey[ratings.elementAt(i)][4],
           clubCategory: category,
+          clubID: monkey[ratings.elementAt(i)][0],
         )));
   }
   return retClubs;

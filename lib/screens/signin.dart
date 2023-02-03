@@ -12,9 +12,8 @@ class SignInPage extends StatefulWidget {
 }
 
 late User ac;
-
+var db;
 class _SignInPageState extends State<SignInPage> {
-  var db;
   @override
   void initState() {
     super.initState();
@@ -121,8 +120,8 @@ class _SignInPageState extends State<SignInPage> {
                                 osis[userdata[i][1]] = userdata[i][3];
                                 email[userdata[i][2]] = userdata[i][3];
                               }
-                              print(osis);
-                              print(email);
+                              // print(osis);
+                              // print(email);
                               if (osis[t1.text] == t2.text) {
                                 return null;
                               } else if (email[t1.text] == t2.text) {

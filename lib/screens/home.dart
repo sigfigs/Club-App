@@ -13,21 +13,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var db;
-  @override
-  void initState() {
-    super.initState();
-    db = Dbhelper();
-    db.initDb();
-  }
+  // var db;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   db = Dbhelper();
+  //   db.initDb();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            toolbarHeight: 80,
+            elevation: 0,
             automaticallyImplyLeading: false,
-            backgroundColor: const Color(0xFF097969),
-            title: const Text("BXSCI Clubs"),
+            backgroundColor: Colors.white,
+            title: const Text("BXSCI Clubs",
+                style: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold)),
             centerTitle: true,
             actions: <Widget>[
               Container(
@@ -36,7 +40,7 @@ class _HomeState extends State<Home> {
                     onTap: (() {
                       Navigator.push(
                           context,
-                           MaterialPageRoute(
+                          MaterialPageRoute(
                               builder: (context) => const Profile()));
                     }),
                     child: ClipRRect(
@@ -89,7 +93,10 @@ class SectionTab extends StatefulWidget {
   final String tabIcon;
   final String tabName;
   const SectionTab(
-      {super.key, required this.tabName, required this.tabIcon, required this.tabBG});
+      {super.key,
+      required this.tabName,
+      required this.tabIcon,
+      required this.tabBG});
   @override
   State<SectionTab> createState() => _SectionTabState();
 }
@@ -101,7 +108,7 @@ class _SectionTabState extends State<SectionTab> {
         onTap: (() {
           Navigator.push(
               context,
-               MaterialPageRoute(
+              MaterialPageRoute(
                   builder: (context) => Section(
                       sectionName: widget.tabName,
                       sectionIcon: widget.tabIcon,
@@ -123,8 +130,7 @@ class _SectionTabState extends State<SectionTab> {
                           children: [
                             Expanded(
                                 child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(50.0),
+                                    borderRadius: BorderRadius.circular(50.0),
                                     child: Image.asset(widget.tabIcon,
                                         fit: BoxFit.fill))),
                             const SizedBox(height: 10),
@@ -143,10 +149,12 @@ Widget buildMyClubs() {
   for (int i = 0; i < ac.clubs.length; i++) {
     var thing = monkey[int.parse(ac.clubs[i]) + 1];
     clubs.add(ClubCard(
-        clubName: thing[1],
-        clubDay: thing[3],
-        clubAdvisor: thing[4],
-        clubCategory: thing[2]));
+      clubName: thing[1],
+      clubDay: thing[3],
+      clubAdvisor: thing[4],
+      clubCategory: thing[2],
+      clubID: thing[0],
+    ));
   }
   return (SingleChildScrollView(
       scrollDirection: Axis.horizontal, child: Row(children: clubs)));
@@ -217,12 +225,14 @@ class ClubCard extends StatefulWidget {
   final String clubDay;
   final String clubAdvisor;
   final String clubCategory;
+  final String clubID;
   const ClubCard(
       {super.key,
       required this.clubName,
       required this.clubDay,
       required this.clubAdvisor,
-      required this.clubCategory});
+      required this.clubCategory,
+      required this.clubID});
 
   @override
   State<ClubCard> createState() => _ClubCardState();
@@ -244,6 +254,7 @@ class _ClubCardState extends State<ClubCard> {
                         clubDay: widget.clubDay,
                         clubAdvisor: widget.clubAdvisor,
                         clubCategory: widget.clubCategory,
+                        clubID: widget.clubID,
                       )));
         }),
         child: SizedBox(
@@ -251,11 +262,12 @@ class _ClubCardState extends State<ClubCard> {
             height: sHeight * 0.4,
             child: Card(
                 elevation: 3,
-                color: const Color.fromARGB(255, 248, 244, 244),
+                color: Colors.white,
+                // color: const Color.fromARGB(255, 248, 244, 244),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 child: Padding(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -265,7 +277,8 @@ class _ClubCardState extends State<ClubCard> {
                                 width: 120)),
                         const SizedBox(height: 20),
                         Text(widget.clubName,
-                            style: const TextStyle(fontWeight: FontWeight.bold)),
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 20),
                         const Text(
                           "lorem ipsum is dummy text. lorem ipsum is dummy text. lorem ipsum is dummy text.",
@@ -275,7 +288,21 @@ class _ClubCardState extends State<ClubCard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             buildTag(widget.clubDay),
+                            buildTag(widget.clubCategory),
+                            buildTag(widget.clubID),
                           ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: TextButton(
+                            child: Text("Join"),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Colors.green[600])),
+                            onPressed: () {
+                              db.joinClub("1", widget.clubID);
+                            },
+                          ),
                         )
                       ]),
                 ))));
