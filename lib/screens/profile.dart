@@ -12,12 +12,6 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -526,8 +520,8 @@ class _Profile extends State<Profile> {
   }
 
   Widget buildProfile(User user) {
-    return ListView(
-      children: [
+    return SingleChildScrollView(
+      child: Column(children: [
         const Divider(),
         ListTile(
           tileColor: Colors.grey[50],
@@ -558,7 +552,7 @@ class _Profile extends State<Profile> {
             )),
             buildClubsDiff()
       ],
-    );
+    ));
   }
 }
 
