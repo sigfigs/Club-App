@@ -6,15 +6,10 @@ import 'signin.dart';
 
 class Discussion extends StatefulWidget {
   final String clubName;
-  final String clubDay;
-  final String clubAdvisor;
-  final String clubCategory;
   const Discussion(
       {super.key,
-      required this.clubName,
-      required this.clubDay,
-      required this.clubAdvisor,
-      required this.clubCategory});
+      required this.clubName
+      });
 
   @override
   State<Discussion> createState() => _Discussion();
@@ -22,7 +17,7 @@ class Discussion extends StatefulWidget {
 
 class _Discussion extends State<Discussion> {
   DateTime now = DateTime.now();
-  final formKey = new GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
   List<Post> discuss = [
     Post(author: 'Benjy', info: 'I like benjy and little kid', timestamp: 'jit')
@@ -31,17 +26,26 @@ class _Discussion extends State<Discussion> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+            backgroundColor: const Color(0xFF097969),
+            title: Text(widget.clubName),
+            centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         _showNewTaskDialog();
       }),
-      body: ListView.builder(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+      const Text("Overview", style: TextStyle(fontWeight: FontWeight.bold)),
+      ListView.builder(
         itemCount: discuss.length,
         itemBuilder: (BuildContext context, index) {
           return Padding(
             padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
             child: comment(discuss[index])
           );
-        }));
+        })]));
   }
 
   Widget comment(Post post) {

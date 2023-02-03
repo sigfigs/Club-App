@@ -23,7 +23,6 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var lst = [actual(width, height, ac), people()];
     var admin = ac.role == 'Admin';
     return Scaffold(
         appBar: AppBar(
@@ -31,23 +30,17 @@ class _Profile extends State<Profile> {
           title: const Text("Profile"),
           centerTitle: true,
         ),
-        body: lst[_selectedIndex],
-        bottomNavigationBar: admin == true
-            ? BottomNavigationBar(
-                selectedItemColor: Colors.green,
-                currentIndex: _selectedIndex,
-                onTap: _onItemTapped,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: 'Profile',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.cake),
-                    label: 'All People',
-                  ),
-                ],
-              )
+        body: actual(width, height, ac),
+        floatingActionButton: admin == true
+            ? FloatingActionButton(
+              elevation: 3,
+              child: const Icon(Icons.list),
+              onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => people()));
+      })
             : null);
   }
 
