@@ -39,7 +39,9 @@ class _Profile extends State<Profile> {
   }
 
   Widget people() {
-    return ListView.builder(
+    return Scaffold(
+      appBar: AppBar(title: Text('All User Information')),
+      body: ListView.builder(
       itemCount: userdata.length,
       itemBuilder: (context, index) {
         return ListTile(
@@ -48,7 +50,7 @@ class _Profile extends State<Profile> {
                 style:
                     const TextStyle(color: Color(0xFF097969), fontSize: 15)));
       },
-    );
+    ));
   }
 
   Widget actual(var height, var width, User ac) {
