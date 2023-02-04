@@ -20,8 +20,8 @@ class _Profile extends State<Profile> {
     var admin = ac.role == 'Admin';
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF097969),
-          title: const Text("Profile"),
+          backgroundColor: Colors.white,
+          title: const Text("Profile", style: TextStyle(color: Colors.black)),
           centerTitle: true,
         ),
         body: actual(width, height, ac),
@@ -523,7 +523,8 @@ class _Profile extends State<Profile> {
 
   Widget buildProfile(User user) {
     return SingleChildScrollView(
-      child: Column(children: [
+      child: Column(
+        children: [
         const Divider(),
         ListTile(
           tileColor: Colors.grey[50],
@@ -546,12 +547,14 @@ class _Profile extends State<Profile> {
               subtitle: Text(user.info),
             )),
         const Divider(),
-        const Text("My Clubs",
+         const Padding(
+          padding: EdgeInsets.all(20),
+          child: Text("Your Clubs",
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 30,
-            )),
+            ))),
             buildClubsDiff()
       ],
     ));
