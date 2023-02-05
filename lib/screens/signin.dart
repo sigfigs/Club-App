@@ -13,6 +13,7 @@ class SignInPage extends StatefulWidget {
 
 late User ac;
 var db;
+
 class _SignInPageState extends State<SignInPage> {
   @override
   void initState() {
@@ -25,17 +26,11 @@ class _SignInPageState extends State<SignInPage> {
 
   void login(
       var name, var email, var osis, var password, var usertype, var clubs) {
-    ac = User(
-        clubs.split(' '),
-        email,
-        password,
-        name,
-        usertype,
-        2023,
-        int.parse(osis),
-        'My name is Ben and I like girls. Specially small girls since I am a little baby and only 3 years old inside of my body at all times');
+    ac = User(clubs.split(' '), email, password, name, usertype, 2023,
+        int.parse(osis), 'My name is Ben and I like girls.');
   }
 
+  int addall = 0;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -69,7 +64,12 @@ class _SignInPageState extends State<SignInPage> {
                       height: height * 1.2,
                       width: width,
                       child: TextFormField(
-                          onTap: () => db.getData(),
+                          onTap: () {
+                            if (addall == 0) {
+                              db.getData();
+                              addall += 1;
+                            }
+                          },
                           controller: t1,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(

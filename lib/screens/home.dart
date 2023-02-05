@@ -4,6 +4,7 @@ import 'section.dart';
 import 'profile.dart';
 import 'package:club_app_5/clubs_db_3.dart';
 import 'signin.dart';
+import 'searchclub.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -33,6 +34,13 @@ class _HomeState extends State<Home> {
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold)),
             centerTitle: true,
+            leading: IconButton(
+              color: Colors.black,
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Search()));
+                }),
             actions: <Widget>[
               Container(
                   margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
@@ -147,13 +155,13 @@ class _SectionTabState extends State<SectionTab> {
 Widget buildMyClubs() {
   List<Widget> clubs = [];
   for (int i = 0; i < ac.clubs.length; i++) {
-    var thing = monkey[int.parse(ac.clubs[i]) + 1];
+    var row = monkey[int.parse(ac.clubs[i]) + 1];
     clubs.add(ClubCard(
-      clubName: thing[1],
-      clubDay: thing[3],
-      clubAdvisor: thing[4],
-      clubCategory: thing[2],
-      clubID: thing[0],
+      clubName: row[1],
+      clubDay: row[3],
+      clubAdvisor: row[4],
+      clubCategory: row[2],
+      clubID: row[0],
     ));
   }
   return (SingleChildScrollView(

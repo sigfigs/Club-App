@@ -35,36 +35,37 @@ class _ClubHomeState extends State<ClubHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-            backgroundColor: const Color(0xFF097969),
-            title: Text(widget.clubName),
-            centerTitle: true,
-            actions: <Widget>[
-              Container(
-                  margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
-                  child: GestureDetector(
-                    onTap: (() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Profile()));
-                    }),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: Image.asset("assets/funnymonkeylips.png")),
-                  ))
-            ]),
-        body: Container(
-            margin: const EdgeInsets.all(20.0),
-            child: clubDetails("assets/bxsci-clubs-logo.png")),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.message),
-              onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Discussion(clubName: widget.clubName)))),
-            );
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+          backgroundColor: const Color(0xFF097969),
+          title: Text(widget.clubName),
+          centerTitle: true,
+          actions: <Widget>[
+            Container(
+                margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                child: GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()));
+                  }),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.asset("assets/funnymonkeylips.png")),
+                ))
+          ]),
+      body: Container(
+          margin: const EdgeInsets.all(20.0),
+          child: clubDetails("assets/bxsci-clubs-logo.png")),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.message),
+          onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      Discussion(clubName: widget.clubName)))),
+    );
   }
 
   Widget clubDetails(String image) {
@@ -133,27 +134,7 @@ List<Widget> buildRelatedClubs(String category, String clubID) {
               clubCategory: category,
               clubID: monkey[i][0])));
     }
+    if (validClubs.length == 5) break;
   }
-  Random random = Random();
-  Set<int> ratings = {};
-  while (ratings.length != 5) {
-    int rand = random.nextInt(validClubs.length);
-    ratings.add(rand);
-  }
-  // print(ratings);
-
-  List<Widget> retClubs = [];
-  for (int i = 0; i < ratings.length; i++) {
-    // print("ratings.elementAt(i): ${ratings.elementAt(i)}");
-    retClubs.add(Padding(
-        padding: const EdgeInsets.only(right: 20, left: 20),
-        child: ClubCard(
-          clubName: monkey[ratings.elementAt(i)][1],
-          clubDay: monkey[ratings.elementAt(i)][3],
-          clubAdvisor: monkey[ratings.elementAt(i)][4],
-          clubCategory: category,
-          clubID: monkey[ratings.elementAt(i)][0],
-        )));
-  }
-  return retClubs;
+  return validClubs;
 }

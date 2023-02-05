@@ -109,10 +109,10 @@ class _Profile extends State<Profile> {
       buildProfile(ac),
       const Divider(),
       Padding(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(20),
           child: SizedBox(
               width: width,
-              height: height * 0.2,
+              height: height * 0.15,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
