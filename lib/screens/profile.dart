@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:club_app_5/user.dart';
 import 'signin.dart';
 import 'package:club_app_5/clubs_db_3.dart';
-import 'home.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
