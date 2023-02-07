@@ -3,6 +3,8 @@ import 'package:club_app_5/clubs_db_3.dart';
 import 'home.dart';
 import 'profile.dart';
 import 'discussions.dart';
+import 'attendance.dart';
+import 'signin.dart';
 
 class ClubHome extends StatefulWidget {
   final String clubName;
@@ -23,23 +25,29 @@ class ClubHome extends StatefulWidget {
 }
 
 class _ClubHomeState extends State<ClubHome> {
-  // var db;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   db = Dbhelper();
-  //   db.initDb();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: const Color(0xFF097969),
-          title: Text(widget.clubName),
+          title: Text(widget.clubName, overflow: TextOverflow.fade,),
           centerTitle: true,
           actions: <Widget>[
+           Container(
+                margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                child:  ac.role == 'Admin' ? GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Attendance(
+                                clubName: widget.clubName,
+                                clubDay: widget.clubDay,
+                                clubID: widget.clubID)));
+                  }),
+                  child: const Icon(Icons.perm_contact_calendar, size: 35),
+                ) : null),
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
                 child: GestureDetector(
