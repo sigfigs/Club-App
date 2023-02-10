@@ -62,7 +62,7 @@ class _SignInPageState extends State<SignInPage> {
                           textAlign: TextAlign.center)),
                   SizedBox(
                       height: height * 1.2,
-                      width: width,
+                      width: width * 0.4,
                       child: TextFormField(
                           onTap: () {
                             if (addall == 0) {
@@ -77,12 +77,12 @@ class _SignInPageState extends State<SignInPage> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            labelText: 'Enter School OSIS or EMAIL',
-                            hintText: 'Enter your OSIS',
+                            labelText: 'Enter osis or email',
+                            // hintText: 'Enter your OSIS or email',
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please enter your email';
+                              return 'Enter osis or email';
                             }
                             for (int i = 0; i < userdata.length; i++) {
                               if (userdata[i][1] == t1.text ||
@@ -97,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
                           height: height * 1.2,
-                          width: width,
+                          width: width * 0.4,
                           child: TextFormField(
                             controller: t2,
                             decoration: InputDecoration(
@@ -134,7 +134,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 5),
                       child: SizedBox(
-                          width: width,
+                          width: width * 0.4,
                           height: height,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -157,7 +157,7 @@ class _SignInPageState extends State<SignInPage> {
                                         builder: (context) => const Home()));
                               }
                             },
-                            child: const Text('LOG IN',
+                            child: const Text('Sign in',
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold,
@@ -166,7 +166,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: SizedBox(
-                          width: width,
+                          width: width * 0.2,
                           height: height,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(

@@ -53,36 +53,35 @@ class _Search extends State<Search> {
     for (int i = 0; i < monkey.length; i++) {
       var row = monkey[i];
       if (!row[1].toLowerCase().contains(value.toLowerCase())) continue;
-      clubs.add(GestureDetector(onTap: (() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ClubHome(
-                      clubName: row[1],
-                      clubDay: row[3],
-                      clubAdvisor: row[4],
-                      clubCategory: row[2],
-                      clubID: row[0],
-                    )));
-      }),
-      child: smallClub(row)));
+      clubs.add(GestureDetector(
+          onTap: (() {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ClubHome(
+                          clubName: row[1],
+                          clubDay: row[3],
+                          clubAdvisor: row[4],
+                          clubCategory: row[2],
+                          clubID: row[0],
+                        )));
+          }),
+          child: smallClub(row)));
     }
     return Column(children: clubs);
   }
 
   Widget smallClub(List row) {
     return Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
-        child: Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: Card(
-                elevation: 3,
-                child: ListTile(
-                    tileColor: Colors.grey[50],
-                    leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: Image.asset("assets/bxsci-clubs-logo.png")),
-                    title: Text(row[1]),
-                    subtitle: Text(row[4])))));
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Card(
+            elevation: 0,
+            child: ListTile(
+                tileColor: Colors.grey[50],
+                leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Image.asset("assets/bxsci-clubs-logo.png")),
+                title: Text(row[1]),
+                subtitle: Text(row[4]))));
   }
 }
