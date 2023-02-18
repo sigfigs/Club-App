@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:club_app_5/clubs_db_3.dart';
+import 'package:club_app_5/clubs_db.dart';
 import 'clubhome.dart';
 
 class Search extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_app_5/user.dart';
 import 'signin.dart';
-import 'package:club_app_5/clubs_db_3.dart';
+import 'package:club_app_5/clubs_db.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -11,7 +11,6 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -19,116 +18,101 @@ class _Profile extends State<Profile> {
     var admin = ac.role == 'Admin';
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 75,
+          foregroundColor: Colors.black,
           iconTheme: const IconThemeData(
-            color: Colors.black, 
+            color: Colors.black,
           ),
           backgroundColor: Colors.white,
           title: const Text("Profile", style: TextStyle(color: Colors.black)),
           centerTitle: true,
         ),
-        body: actual(width, height, ac),
+        body: Container(
+            margin: EdgeInsets.fromLTRB(25, 75, 25, 25),
+            child: actual(width, height, ac)),
         floatingActionButton: admin == true
             ? FloatingActionButton(
-              elevation: 3,
-              child: const Icon(Icons.list),
-              onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => people()));
-      })
+                elevation: 3,
+                child: const Icon(Icons.list),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => people()));
+                })
             : null);
   }
 
   Widget people() {
     return Scaffold(
-      appBar: AppBar(title: Text('All User Information')),
-      body: ListView.builder(
-      itemCount: userdata.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-            trailing: const Icon(Icons.delete),
-            title: Text(userdata[index].toString(),
-                style:
-                    const TextStyle(color: Color(0xFF097969), fontSize: 15)));
-      },
-    ));
+        appBar: AppBar(title: Text('All User Information')),
+        body: ListView.builder(
+          itemCount: userdata.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+                trailing: const Icon(Icons.delete),
+                title: Text(userdata[index].toString(),
+                    style: const TextStyle(
+                        color: Color(0xFF097969), fontSize: 15)));
+          },
+        ));
   }
 
   Widget actual(var height, var width, User ac) {
     return SingleChildScrollView(
-        child: Column(children: [
-      Stack(alignment: Alignment.center, children: [
-        // Image.asset('assets/back.png',
-        //     fit: BoxFit.fill, height: height / 2, width: width),
-        Container(
-          width: width,
-          height: height / 2,
-          decoration: BoxDecoration(color: Colors.grey[200]),
-        ),
-        Positioned(
-            top: height / 14,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey.shade800,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50.0),
-                          child: Image.asset("assets/funnymonkeylips.png")))),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                      onTap: (() => _displayNameDialog(context, ac)),
-                      child: Text(ac.name,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w500))),
-                  GestureDetector(
-                      onTap: (() => _displayEmailDialog(context, ac)),
-                      child: Text(ac.email,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500))),
-                  GestureDetector(
-                      onTap: (() => _displayOsisDialog(context, ac)),
-                      child: Text(ac.osis.toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500))),
-                ],
-              ),
-            ]))
-      ]),
-      buildProfile(ac),
-      const Divider(),
+        child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
       Padding(
-          padding: const EdgeInsets.all(20),
-          child: SizedBox(
-              width: width,
-              height: height * 0.15,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    backgroundColor: const Color(0xFF097969)),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignInPage()));
-                },
-                child: const Text('Sign Out',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
-              )))
+          padding: const EdgeInsets.all(10),
+          child: CircleAvatar(
+              radius: 50,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Image.asset("assets/funnymonkeylips.png")))),
+      GestureDetector(
+          onTap: (() => _displayNameDialog(context, ac)),
+          child: Text(ac.name,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500))),
+      GestureDetector(
+          onTap: (() => _displayEmailDialog(context, ac)),
+          child: Text(ac.email,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500))),
+      GestureDetector(
+          onTap: (() => _displayOsisDialog(context, ac)),
+          child: Text(ac.osis.toString(),
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500))),
+      buildProfile(ac),
+      Padding(
+        padding: const EdgeInsets.all(20),
+        child: SizedBox(
+            width: 500,
+            height: 50,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                backgroundColor: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SignInPage(),
+                  ),
+                );
+              },
+              child: const Text('Sign Out',
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black)),
+            )),
+      )
     ]));
   }
 
@@ -525,13 +509,13 @@ class _Profile extends State<Profile> {
 
   Widget buildProfile(User user) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
+        child: Column(
+      children: [
         const Divider(),
         ListTile(
           tileColor: Colors.grey[50],
           contentPadding: const EdgeInsets.all(5),
-          leading: const Icon(Icons.person),
+          leading: const Icon(Icons.school_rounded),
           title: const Text('Gradudation Year',
               style: TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(user.gradyear.toString()),
@@ -549,15 +533,15 @@ class _Profile extends State<Profile> {
               subtitle: Text(user.info),
             )),
         const Divider(),
-         const Padding(
-          padding: EdgeInsets.all(20),
-          child: Text("Your Clubs",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ))),
-            buildClubsDiff()
+        const Padding(
+            padding: EdgeInsets.all(20),
+            child: Text("Your Clubs",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ))),
+        buildClubsDiff()
       ],
     ));
   }
@@ -576,9 +560,7 @@ Widget buildClubsDiff() {
   List<Widget> clubs = [];
   for (int i = 0; i < ac.clubs.length; i++) {
     var thing = monkey[int.parse(ac.clubs[i]) + 1];
-    clubs.add(Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 5),
-      child: Container(
+    clubs.add(Container(
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
         child: Card(
             elevation: 3,
@@ -588,7 +570,7 @@ Widget buildClubsDiff() {
                     borderRadius: BorderRadius.circular(50.0),
                     child: Image.asset("assets/bxsci-clubs-logo.png")),
                 title: Text(thing[1]),
-                subtitle: Text(thing[4]))))));
+                subtitle: Text(thing[4])))));
   }
   return Column(children: clubs);
 }

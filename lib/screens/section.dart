@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
-import '../clubs_db_3.dart';
+import '../clubs_db.dart';
 import 'signin.dart';
 
 class Section extends StatefulWidget {
@@ -18,14 +18,6 @@ class Section extends StatefulWidget {
 }
 
 class _Section extends State<Section> {
-  // var db;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   db = Dbhelper();
-  //   db.initDb();
-  // }
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -33,8 +25,11 @@ class _Section extends State<Section> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-            backgroundColor: const Color(0xFF097969),
-            title: Text(widget.sectionName),
+            foregroundColor: Colors.black,
+            toolbarHeight: 75,
+            backgroundColor: Colors.white,
+            title:
+                Text(widget.sectionName, style: TextStyle(color: Colors.black)),
             centerTitle: true),
         floatingActionButton: ac.role == 'Admin'
             ? FloatingActionButton(
@@ -44,17 +39,63 @@ class _Section extends State<Section> {
               )
             : null,
         body: SingleChildScrollView(
-            child: Column(children: [
-          Image.asset(widget.sectionBG, fit: BoxFit.fill),
-          Padding(
-              padding: const EdgeInsets.all(30),
-              child: Align(
-                  alignment: Alignment.center,
-                  child: Text('All ${widget.sectionName} Clubs',
-                      style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.bold)))),
-          Column(children: getAllClubsInCategory()),
-        ])));
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              int crossAxisCount = 3;
+              double screenWidth = MediaQuery.of(context).size.width;
+              if (screenWidth < 900) {
+                crossAxisCount = 2;
+              }
+              if (screenWidth < 500) {
+                crossAxisCount = 1;
+              }
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: Image.asset(widget.sectionBG,
+                        fit: BoxFit.fill, height: h * 0.3),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'All ${widget.sectionName} Clubs',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GridView.count(
+                    shrinkWrap: true,
+                    crossAxisCount: crossAxisCount,
+                    children: getAllClubsInCategory(),
+                  ),
+                ],
+              );
+            },
+          ),
+        ));
+
+    // body: SingleChildScrollView(
+    //     child: Column(children: [
+    //   Image.asset(widget.sectionBG, fit: BoxFit.fill),
+    //   Padding(
+    //       padding: const EdgeInsets.all(30),
+    //       child: Align(
+    //           alignment: Alignment.center,
+    //           child: Text('All ${widget.sectionName} Clubs',
+    //               style: const TextStyle(
+    //                   color: Colors.black,
+    //                   fontSize: 30,
+    //                   fontWeight: FontWeight.bold)))),
+    //   Column(children: getAllClubsInCategory()),
+    // ]))
+    // );
   }
 
   List<Widget> getAllClubsInCategory() {
@@ -64,12 +105,11 @@ class _Section extends State<Section> {
         validClubs.add(Padding(
             padding: const EdgeInsets.only(right: 20, left: 20),
             child: ClubCard(
-              clubName: monkey[i][1],
-              clubDay: monkey[i][3],
-              clubAdvisor: monkey[i][4],
-              clubCategory: monkey[i][2],
-              clubID: monkey[i][0]
-            )));
+                clubName: monkey[i][1],
+                clubDay: monkey[i][3],
+                clubAdvisor: monkey[i][4],
+                clubCategory: monkey[i][2],
+                clubID: monkey[i][0])));
       }
     }
     return validClubs;

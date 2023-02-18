@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:club_app_5/clubs_db_3.dart';
+import 'package:club_app_5/clubs_db.dart';
 import 'home.dart';
 import 'profile.dart';
 import 'discussions.dart';
@@ -30,24 +30,32 @@ class _ClubHomeState extends State<ClubHome> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: const Color(0xFF097969),
-          title: Text(widget.clubName, overflow: TextOverflow.fade,),
+          toolbarHeight: 75,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          title: Text(
+            widget.clubName,
+            overflow: TextOverflow.fade,
+          ),
           centerTitle: true,
           actions: <Widget>[
-           Container(
+            Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
-                child:  ac.role == 'Admin' ? GestureDetector(
-                  onTap: (() {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Attendance(
-                                clubName: widget.clubName,
-                                clubDay: widget.clubDay,
-                                clubID: widget.clubID)));
-                  }),
-                  child: const Icon(Icons.perm_contact_calendar, size: 35),
-                ) : null),
+                child: ac.role == 'Admin'
+                    ? GestureDetector(
+                        onTap: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Attendance(
+                                      clubName: widget.clubName,
+                                      clubDay: widget.clubDay,
+                                      clubID: widget.clubID)));
+                        }),
+                        child:
+                            const Icon(Icons.perm_contact_calendar, size: 35),
+                      )
+                    : null),
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
                 child: GestureDetector(
@@ -63,7 +71,7 @@ class _ClubHomeState extends State<ClubHome> {
                 ))
           ]),
       body: Container(
-          margin: const EdgeInsets.all(20.0),
+          margin: EdgeInsets.fromLTRB(25, 75, 25, 25),
           child: clubDetails("assets/bxsci-clubs-logo.png")),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.message),
@@ -78,10 +86,12 @@ class _ClubHomeState extends State<ClubHome> {
   Widget clubDetails(String image) {
     return (ListView(
       children: [
-        Image.asset(
-          "assets/bxsci-clubs-logo.png",
-        ),
-        const SizedBox(height: 100),
+        Center(
+            child: CircleAvatar(
+          radius: h * 0.15,
+          backgroundImage: AssetImage("assets/bxsci-clubs-logo.png"),
+        )),
+        const SizedBox(height: 50),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

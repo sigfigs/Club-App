@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'clubhome.dart';
 import 'section.dart';
 import 'profile.dart';
-import 'package:club_app_5/clubs_db_3.dart';
+import 'package:club_app_5/clubs_db.dart';
 import 'signin.dart';
 import 'searchclub.dart';
 
@@ -13,20 +13,18 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  // var db;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   db = Dbhelper();
-  //   db.initDb();
-  // }
+var w;
+var h;
 
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    w = MediaQuery.of(context).size.width;
+    h = MediaQuery.of(context).size.height;
+
     return Scaffold(
         appBar: AppBar(
-            toolbarHeight: 80,
+            toolbarHeight: 75,
             elevation: 0,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
@@ -34,16 +32,18 @@ class _HomeState extends State<Home> {
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold)),
             centerTitle: true,
-            leading: IconButton(
-              color: Colors.black,
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Search()));
-                }),
             actions: <Widget>[
+              IconButton(
+                  color: Colors.black,
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Search()));
+                  }),
               Container(
-                  margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                  margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: GestureDetector(
                     onTap: (() {
                       Navigator.push(
@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
                   ))
             ]),
         body: Container(
-            margin: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+            margin: const EdgeInsets.fromLTRB(30, 40, 30, 30),
             child: (SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,8 +71,9 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 25),
                   buildSections(),
 
+                  const SizedBox(height: 75),
+
                   //my clubs
-                  const SizedBox(height: 30),
                   const Text("My Clubs",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -82,8 +83,9 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 25),
                   buildMyClubs(),
 
+                  const SizedBox(height: 75),
+
                   //popular clubs
-                  const SizedBox(height: 30),
                   const Text("Popular Clubs",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -266,12 +268,11 @@ class _ClubCardState extends State<ClubCard> {
                       )));
         }),
         child: SizedBox(
-            width: sWidth,
-            height: sHeight * 0.4,
+            width: sWidth * 0.25,
+            height: sHeight * 0.45,
             child: Card(
                 elevation: 3,
                 color: Colors.white,
-                // color: const Color.fromARGB(255, 248, 244, 244),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 child: Padding(
@@ -289,8 +290,7 @@ class _ClubCardState extends State<ClubCard> {
                                 const TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 20),
                         const Text(
-                          "lorem ipsum is dummy text. lorem ipsum is dummy text. lorem ipsum is dummy text.",
-                        ),
+                            "lorem ipsum is dummy text. lorem ipsum is dummy text. lorem ipsum is dummy text."),
                         const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
