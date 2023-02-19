@@ -3,8 +3,17 @@ import 'package:club_app_5/user.dart';
 import 'signin.dart';
 import 'package:club_app_5/clubs_db.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import '../auth.dart';
+
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  Profile({super.key});
+
+  final User? user = Auth().currentUser;
+
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
 
   @override
   State<Profile> createState() => _Profile();
@@ -27,9 +36,15 @@ class _Profile extends State<Profile> {
           title: const Text("Profile", style: TextStyle(color: Colors.black)),
           centerTitle: true,
         ),
-        body: Container(
-            margin: EdgeInsets.fromLTRB(25, 75, 25, 25),
-            child: actual(width, height, ac)),
+        body: Column(children: [
+          Container(
+              margin: EdgeInsets.fromLTRB(25, 75, 25, 25),
+              child: actual(width, height, ac)),
+          ElevatedButton(
+            onPressed: widget.signOut,
+            child: const Text("Sign Out"),
+          )
+        ]),
         floatingActionButton: admin == true
             ? FloatingActionButton(
                 elevation: 3,
@@ -56,7 +71,7 @@ class _Profile extends State<Profile> {
         ));
   }
 
-  Widget actual(var height, var width, User ac) {
+  Widget actual(var height, var width, Userx ac) {
     return SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
       Padding(
@@ -116,7 +131,7 @@ class _Profile extends State<Profile> {
     ]));
   }
 
-  Future<Future> _displayNameDialog(BuildContext context, User c) async {
+  Future<Future> _displayNameDialog(BuildContext context, Userx c) async {
     TextEditingController nameController1 = TextEditingController();
     TextEditingController nameController2 = TextEditingController();
     var width = MediaQuery.of(context).size.width;
@@ -219,7 +234,7 @@ class _Profile extends State<Profile> {
         });
   }
 
-  Future<Future> _displayOsisDialog(BuildContext context, User c) async {
+  Future<Future> _displayOsisDialog(BuildContext context, Userx c) async {
     TextEditingController nameController1 = TextEditingController();
     TextEditingController nameController2 = TextEditingController();
     var width = MediaQuery.of(context).size.width;
@@ -322,7 +337,7 @@ class _Profile extends State<Profile> {
         });
   }
 
-  Future<Future> _displayEmailDialog(BuildContext context, User c) async {
+  Future<Future> _displayEmailDialog(BuildContext context, Userx c) async {
     TextEditingController nameController1 = TextEditingController();
     TextEditingController nameController2 = TextEditingController();
     var width = MediaQuery.of(context).size.width;
@@ -425,7 +440,7 @@ class _Profile extends State<Profile> {
         });
   }
 
-  Future<Future> _displayAboutDialog(BuildContext context, User c) async {
+  Future<Future> _displayAboutDialog(BuildContext context, Userx c) async {
     TextEditingController nameController1 = TextEditingController();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -507,7 +522,7 @@ class _Profile extends State<Profile> {
         });
   }
 
-  Widget buildProfile(User user) {
+  Widget buildProfile(Userx user) {
     return SingleChildScrollView(
         child: Column(
       children: [

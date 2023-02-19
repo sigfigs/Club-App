@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Profile()));
+                              builder: (context) => Profile()));
                     }),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(50.0),

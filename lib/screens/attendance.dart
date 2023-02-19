@@ -35,7 +35,7 @@ class _Attendance extends State<Attendance> {
             }));
   }
 
-  Widget buildPerson(User person, int index) {
+  Widget buildPerson(Userx person, int index) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0)),

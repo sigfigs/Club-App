@@ -63,7 +63,7 @@ class _ClubHomeState extends State<ClubHome> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Profile()));
+                            builder: (context) => Profile()));
                   }),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(50.0),

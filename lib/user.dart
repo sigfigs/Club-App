@@ -1,4 +1,4 @@
-class User {
+class Userx {
   int osis;
   String email;
   int gradyear;
@@ -8,7 +8,7 @@ class User {
   String name;
   String info;
 
-  User(this.clubs, this.email, this.password, this.name, this.role,
+  Userx(this.clubs, this.email, this.password, this.name, this.role,
       this.gradyear, this.osis, this.info);
 }
 
@@ -18,7 +18,7 @@ class Club {
   String clubRoom;
   String day;
   String clubdetails;
-  Map<User, bool> attendance;
+  Map<Userx, bool> attendance;
   List members;
   List announcements;
 
