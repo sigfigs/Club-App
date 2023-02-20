@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'signup.dart';
 import 'home.dart';
 import '../clubs_db.dart';
-import 'package:club_app_5/user.dart';
+import '../user.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 // void main(){
@@ -19,6 +19,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // }
 
+String userEmail = "";
+bool isLoggedIn = false;
+
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -27,6 +30,8 @@ class SignInPage extends StatefulWidget {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       print("Signed in");
+      userEmail = email;
+      isLoggedIn = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -40,7 +45,7 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-late Userx ac;
+// late Userx ac;
 var db;
 
 class _SignInPageState extends State<SignInPage> {
@@ -53,11 +58,11 @@ class _SignInPageState extends State<SignInPage> {
 
   var person = 0;
 
-  void login(
-      var name, var email, var osis, var password, var usertype, var clubs) {
-    ac = Userx(clubs.split(' '), email, password, name, usertype, 2023,
-        int.parse(osis), 'My name is Ben and I like girls.');
-  }
+  // void login(
+  //     var name, var email, var osis, var password, var usertype, var clubs) {
+  //   ac = Userx(clubs.split(' '), email, password, name, usertype, 2023,
+  //       int.parse(osis), 'My name is Ben and I like girls.');
+  // }
 
   int addall = 0;
   final _formKey = GlobalKey<FormState>();
@@ -77,11 +82,8 @@ class _SignInPageState extends State<SignInPage> {
                 child: Center(
                   child: SingleChildScrollView(
                     child: Container(
-                      // height: height * 1.2,
-                      // width: width * 0.5,
                       width: 500,
                       padding: EdgeInsets.all(20),
-
                       child: Column(children: [
                         ClipRRect(
                             borderRadius: BorderRadius.circular(50.0),
@@ -171,8 +173,6 @@ class _SignInPageState extends State<SignInPage> {
                                             email[userdata[i][2]] =
                                                 userdata[i][3];
                                           }
-                                          // print(osis);
-                                          // print(email);
                                           if (osis[t1.text] == t2.text) {
                                             return null;
                                           } else if (email[t1.text] ==
@@ -196,26 +196,56 @@ class _SignInPageState extends State<SignInPage> {
                                                     BorderRadius.circular(10)),
                                             backgroundColor:
                                                 const Color(0xFF097969)),
+                                        onPressed: () async {
+                                          widget.signInWithEmailAndPassword(
+                                              t1.text, t2.text);
+                                          // if (_formKey.currentState!.validate())
+                                          // _formKey.currentState!.validate();
+                                          if (isLoggedIn) {
+                                            // login(
+                                            //     'Full Name',
+                                            //     userdata[person][2],
+                                            //     userdata[person][1],
+                                            //     userdata[person][3],
+                                            //     userdata[person][4],
+                                            //     userdata[person][5]);
+                                            // _formKey.currentState!.reset();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Home()));
+                                          }
+                                        },
                                         // onPressed: () async {
-                                        //   if (_formKey.currentState!
-                                        //       .validate()) {
-                                        //     login(
-                                        //         'Benjamin Chong',
-                                        //         userdata[person][2],
-                                        //         userdata[person][1],
-                                        //         userdata[person][3],
-                                        //         userdata[person][4],
-                                        //         userdata[person][5]);
-                                        //     _formKey.currentState!.reset();
+                                        //   widget.signInWithEmailAndPassword(
+                                        //       t1.text,
+                                        //       t2.text);
+                                        //   if (isLoggedIn) {
                                         //     Navigator.push(
                                         //         context,
                                         //         MaterialPageRoute(
                                         //             builder: (context) =>
                                         //                 const Home()));
                                         //   }
+
+                                        // if (_formKey.currentState!
+                                        //     .validate()) {
+                                        //   login(
+                                        //       'Benjamin Chong',
+                                        //       userdata[person][2],
+                                        //       userdata[person][1],
+                                        //       userdata[person][3],
+                                        //       userdata[person][4],
+                                        //       userdata[person][5]);
+                                        //   _formKey.currentState!.reset();
+                                        //   Navigator.push(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //           builder: (context) =>
+                                        //               const Home()));
+                                        // }
                                         // },
-                                        onPressed: () =>
-                                            widget.signInWithEmailAndPassword("lij12@bxscience.edu", "passwordlij12"),
                                         child: const Text('Sign in',
                                             style: TextStyle(
                                                 fontSize: 20.0,
@@ -225,34 +255,28 @@ class _SignInPageState extends State<SignInPage> {
                             ])),
                         SizedBox(height: height / 4, width: width),
                         Container(
-                            // decoration: BoxDecoration(
-                            //     color: Colors.grey[100],
-                            //     borderRadius: BorderRadius.circular(20)),
-                            child: SizedBox(
-                                width: 500,
-                                height: height,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    backgroundColor: Colors.white,
+                            width: 500,
+                            height: height,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpPage(),
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                      'New to SciClubs? Create an account.',
-                                      style: TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black)),
-                                ))),
+                                );
+                              },
+                              child: const Text(
+                                  'New to SciClubs? Create an account.',
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black)),
+                            )),
                       ]),
                     ),
                   ),
@@ -261,3 +285,6 @@ class _SignInPageState extends State<SignInPage> {
         ));
   }
 }
+
+Userx ac = Userx(["0", "1", "2", "3", "4", "5"], userEmail, "password", "name",
+    "role", 2023, 222445629, "info");

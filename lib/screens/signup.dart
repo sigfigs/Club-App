@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '../user.dart';
+import 'signin.dart';
+import 'home.dart';
+
+List userInfo = [];
+bool hasSignedUp = false;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+
+  Future<void> createUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      print("Signed up");
+      hasSignedUp = true;
+    } on FirebaseAuthException catch (e) {}
+  }
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -10,241 +27,156 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width * 0.9;
     var height = MediaQuery.of(context).size.height * 0.07;
-    return Scaffold(
-        appBar: AppBar(
-          title:
-              const Text('Sign Up'),
-          backgroundColor: const Color(0xFF097969),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
+    TextEditingController t1 = TextEditingController();
+    TextEditingController t2 = TextEditingController();
+    return MaterialApp(
+        title: 'Login and Sign Up',
+        home: Scaffold(
+          body: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Form(
                 key: _formKey,
-                child: SingleChildScrollView(
-                    child: Column(children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-                    SizedBox(
-                      width: 150,
-                      height: 150,
-                      // child: Image(
-                      //   image: AssetImage('assets/bxscilogo.jpeg'),
-                      // )
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: 500,
+                      padding: EdgeInsets.all(20),
+                      child: Column(children: [
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(50.0),
+                            child: Image.asset("assets/bxsci-clubs-logo.png",
+                                width: 120)),
+                        const Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text('Sign up for SciClubs',
+                                style: TextStyle(
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF097969)),
+                                textAlign: TextAlign.center)),
+                        Container(
+                            // padding: EdgeInsets.fromLTRB(30, 60, 30, 60),
+                            decoration: BoxDecoration(
+                                // color: Color(0xFFF6F8FA),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(children: [
+                              buildField("Full Name"),
+                              buildField("OSIS"),
+                              buildField("Official Class"),
+                              buildField("Graduation Year"),
+                              buildField("Bronx Science Email"),
+                              buildField("Password"),
+                              buildField("Confirm Password"),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 5),
+                                  child: SizedBox(
+                                      width: 500,
+                                      height: height,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            backgroundColor:
+                                                const Color(0xFF097969)),
+                                        onPressed: () async {
+                                          userInfo.clear();
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Home(),
+                                              ),
+                                            );
+                                            await widget
+                                                .createUserWithEmailAndPassword(
+                                                    userInfo[4], userInfo[5]);
+                                            if (hasSignedUp) {
+                                              print(userInfo);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Home()),
+                                              );
+                                            }
+                                          }
+                                        },
+                                        child: const Text('Sign Up',
+                                            style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white)),
+                                      )))
+                            ])),
+                        SizedBox(height: height / 4, width: width),
+                        Container(
+                            width: 500,
+                            height: height,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignInPage(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                  'Already have an account? Login here.',
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black)),
+                            )),
+                      ]),
                     ),
-                    SizedBox(
-                      width: 150,
-                      child: Text('BxSci Clubs',
-                                    style: TextStyle(
-                                    fontSize: 40.0,
-                                    fontWeight: FontWeight.w800,
-                                    color: Color(0xFF097969))),
-                    )
-                  ]),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'School Email',
-                              hintText: 'Enter your Email',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Email';
-                              }
-                              return null;
-                            },
-                          ))),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'Full Name',
-                              hintText: 'Enter your Full Name',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Name';
-                              }
-                              return null;
-                            },
-                          ))),
-                   Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'Grad Year',
-                              hintText: 'Enter your Graduation Year',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter the Year';
-                              }
-                              return null;
-                            },
-                          ))),
-                   Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'OSIS Number',
-                              hintText: 'Enter your OSIS',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your OSIS';
-                              }
-                              return null;
-                            },
-                          ))),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'Password',
-                              hintText: 'Enter your Password',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Password';
-                              }
-                              return null;
-                            },
-                          ))),
-                   Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'Club',
-                              hintText: 'Enter your Club',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Club';
-                              }
-                              return null;
-                            },
-                          ))),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'Phone Number',
-                              hintText: 'Enter your Phone Number',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Number';
-                              }
-                              return null;
-                            },
-                          ))),
-                   Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          height: height * 1.2,
-                          width: width,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              labelText: 'Club Position',
-                              hintText: 'Enter your Club Position',
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Club Position';
-                              }
-                              return null;
-                            },
-                          ))),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 5, bottom: 5),
-                      child: SizedBox(
-                          width: width,
-                          height: height,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: const StadiumBorder(),
-                                backgroundColor: const Color(0xFF097969)),
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                              }
-                            },
-                            child: const Text('SIGN UP',
-                                ),
-                          ))),
-                ])))));
+                  ),
+                ),
+              )),
+        ));
   }
+}
+
+Widget buildField(String info) {
+  TextEditingController t1 = TextEditingController();
+
+  return Container(
+    margin: const EdgeInsets.fromLTRB(5, 15, 5, 15),
+    height: 25,
+    decoration: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.grey.shade300,
+          width: 1.0,
+        ),
+      ),
+    ),
+    child: TextFormField(
+      controller: t1,
+      decoration: InputDecoration.collapsed(
+        hintText: '$info',
+        hintStyle: const TextStyle(fontSize: 16.0),
+      ),
+      validator: (value) {
+        userInfo.add(t1.text);
+        print(userInfo);
+        print(t1.text);
+        if (value!.isEmpty) {
+          return 'Please enter your ${info.toLowerCase()}';
+        }
+        return null;
+      },
+    ),
+  );
 }
