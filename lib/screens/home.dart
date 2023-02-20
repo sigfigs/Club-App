@@ -46,10 +46,8 @@ class _HomeState extends State<Home> {
                   margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: GestureDetector(
                     onTap: (() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Profile()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Profile()));
                     }),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(50.0),
@@ -155,19 +153,20 @@ class _SectionTabState extends State<SectionTab> {
 }
 
 Widget buildMyClubs() {
-  List<Widget> clubs = [];
-  for (int i = 0; i < ac.clubs.length; i++) {
-    var row = monkey[int.parse(ac.clubs[i]) + 1];
-    clubs.add(ClubCard(
-      clubName: row[1],
-      clubDay: row[3],
-      clubAdvisor: row[4],
-      clubCategory: row[2],
-      clubID: row[0],
-    ));
-  }
-  return (SingleChildScrollView(
-      scrollDirection: Axis.horizontal, child: Row(children: clubs)));
+  return (Text("My Clubs"));
+  // List<Widget> clubs = [];
+  // for (int i = 0; i < ac.clubs.length; i++) {
+  //   var row = monkey[int.parse(ac.clubs[i]) + 1];
+  //   clubs.add(ClubCard(
+  //     clubName: row[1],
+  //     clubDay: row[3],
+  //     clubAdvisor: row[4],
+  //     clubCategory: row[2],
+  //     clubID: row[0],
+  //   ));
+  // }
+  // return (SingleChildScrollView(
+  //     scrollDirection: Axis.horizontal, child: Row(children: clubs)));
 }
 
 Widget buildSections() {
