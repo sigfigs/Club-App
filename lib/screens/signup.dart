@@ -59,9 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     color: Color(0xFF097969)),
                                 textAlign: TextAlign.center)),
                         Container(
-                            // padding: EdgeInsets.fromLTRB(30, 60, 30, 60),
                             decoration: BoxDecoration(
-                                // color: Color(0xFFF6F8FA),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Column(children: [
                               buildField("Full Name"),
