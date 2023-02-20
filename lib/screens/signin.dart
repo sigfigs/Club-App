@@ -103,6 +103,7 @@ class _SignInPageState extends State<SignInPage> {
                               color: Color(0xFF097969)),
                           textAlign: TextAlign.center)),
                   Container(
+                    margin: EdgeInsets.all(20),
                       decoration: BoxDecoration(
                           color: Color(0xFFF6F8FA),
                           borderRadius: BorderRadius.circular(20)),
@@ -262,6 +263,7 @@ class _SignInPageState extends State<SignInPage> {
                       ])),
                   SizedBox(height: height / 4, width: width),
                   Container(
+                    margin:const EdgeInsets.only(left:20, right: 20),
                       width: 500,
                       height: height,
                       child: ElevatedButton(
