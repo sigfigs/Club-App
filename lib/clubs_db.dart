@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:postgres/postgres.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 List<List<dynamic>> monkey = [];
 List<List<dynamic>> userdata = [];
@@ -18,6 +19,25 @@ Map<String, int> categorySizes = {
 };
 
 class Dbhelper {
+  final String? uid;
+  Dbhelper({this.uid});
+
+  //collection reference
+  final CollectionReference userDataCollection =
+      FirebaseFirestore.instance.collection('userData');
+
+  Future updateUserData(String name, int osis, String oc, int gradYear,
+      String email, String password, List clubs) async {
+    return await userDataCollection.doc(uid).set({
+      'name': name,
+      'osis': osis,
+      'official_class': oc,
+      'graduation_year': gradYear,
+      'email': email,
+      'clubs': clubs
+    });
+  }
+
   final connection = PostgreSQLConnection(
     "localhost",
     5432,
@@ -45,7 +65,6 @@ class Dbhelper {
     for (var row in user) {
       userdata.add(row);
     }
-
   }
 
   Future<void> insertClub(
@@ -54,20 +73,16 @@ class Dbhelper {
         "INSERT INTO public.clubs VALUES ('$i', '$n', '$c', '$m', '$an', '$ae');");
   }
 
-  Future<void> deleteClub(
-      String clubID) async {
-    await connection.execute(
-        "DELETE FROM public.clubs WHERE id = '$clubID';");
+  Future<void> deleteClub(String clubID) async {
+    await connection.execute("DELETE FROM public.clubs WHERE id = '$clubID';");
   }
 
-  Future<void> joinClub(
-      String newClubID, String userID) async {
+  Future<void> joinClub(String newClubID, String userID) async {
     await connection.execute(
         "UPDATE public.clubs SET clubs = concat(clubs, ' $newClubID') WHERE id = '$userID';");
   }
 
-  Future<void> leaveClub(
-      String newClubID, String userID) async {
+  Future<void> leaveClub(String newClubID, String userID) async {
     await connection.execute(
         "UPDATE public.clubs SET clubs = concat(clubs, ' $newClubID') WHERE id = '$userID';");
   }

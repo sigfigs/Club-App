@@ -51,7 +51,6 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-// late Userx ac;
 var db;
 
 class _SignInPageState extends State<SignInPage> {
@@ -62,15 +61,6 @@ class _SignInPageState extends State<SignInPage> {
     db.initDb();
   }
 
-  var person = 0;
-
-  // void login(
-  //     var name, var email, var osis, var password, var usertype, var clubs) {
-  //   ac = Userx(clubs.split(' '), email, password, name, usertype, 2023,
-  //       int.parse(osis), 'My name is Ben and I like girls.');
-  // }
-
-  int addall = 0;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -103,7 +93,7 @@ class _SignInPageState extends State<SignInPage> {
                               color: Color(0xFF097969)),
                           textAlign: TextAlign.center)),
                   Container(
-                    margin: EdgeInsets.all(20),
+                      margin: EdgeInsets.all(20),
                       decoration: BoxDecoration(
                           color: Color(0xFFF6F8FA),
                           borderRadius: BorderRadius.circular(20)),
@@ -111,12 +101,7 @@ class _SignInPageState extends State<SignInPage> {
                         SizedBox(
                             height: height * 1.2,
                             child: TextFormField(
-                                onTap: () {
-                                  if (addall == 0) {
-                                    db.getData();
-                                    addall += 1;
-                                  }
-                                },
+                                onTap: () {},
                                 controller: t1,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
@@ -127,19 +112,7 @@ class _SignInPageState extends State<SignInPage> {
                                   labelText: 'OSIS or Email',
                                   // hintText: 'Enter your OSIS or email',
                                 ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Enter osis or email';
-                                  }
-                                  for (int i = 0; i < userdata.length; i++) {
-                                    if (userdata[i][1] == t1.text ||
-                                        userdata[i][2] == t1.text) {
-                                      person = i;
-                                      return null;
-                                    }
-                                  }
-                                  return 'Email or OSIS does not exist';
-                                })),
+                                validator: (value) {})),
                         Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: SizedBox(
@@ -155,23 +128,7 @@ class _SignInPageState extends State<SignInPage> {
                                     labelText: 'Password',
                                   ),
                                   obscureText: true,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    Map osis = {};
-                                    Map email = {};
-                                    for (int i = 0; i < userdata.length; i++) {
-                                      osis[userdata[i][1]] = userdata[i][3];
-                                      email[userdata[i][2]] = userdata[i][3];
-                                    }
-                                    if (osis[t1.text] == t2.text) {
-                                      return null;
-                                    } else if (email[t1.text] == t2.text) {
-                                      return null;
-                                    }
-                                    return 'Incorrect Password';
-                                  },
+                                  validator: (value) {},
                                 ))),
                         Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -187,59 +144,21 @@ class _SignInPageState extends State<SignInPage> {
                                   onPressed: () async {
                                     widget.signInWithEmailAndPassword(
                                         t1.text, t2.text);
-                                    // if (_formKey.currentState!.validate())
-                                    // _formKey.currentState!.validate();
                                     if (isLoggedIn) {
-                                      // login(
-                                      //     'Full Name',
-                                      //     userdata[person][2],
-                                      //     userdata[person][1],
-                                      //     userdata[person][3],
-                                      //     userdata[person][4],
-                                      //     userdata[person][5]);
-                                      // _formKey.currentState!.reset();
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const Home()));
-                                    } else {}
+                                    }
                                   },
-                                  // onPressed: () async {
-                                  //   widget.signInWithEmailAndPassword(
-                                  //       t1.text,
-                                  //       t2.text);
-                                  //   if (isLoggedIn) {
-                                  //     Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //             builder: (context) =>
-                                  //                 const Home()));
-                                  //   }
-
-                                  // if (_formKey.currentState!
-                                  //     .validate()) {
-                                  //   login(
-                                  //       'Benjamin Chong',
-                                  //       userdata[person][2],
-                                  //       userdata[person][1],
-                                  //       userdata[person][3],
-                                  //       userdata[person][4],
-                                  //       userdata[person][5]);
-                                  //   _formKey.currentState!.reset();
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               const Home()));
-                                  // }
-                                  // },
                                   child: const Text('Sign in',
                                       style: TextStyle(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white)),
                                 ))),
+                        Divider(color: Colors.grey[100]),
                         Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: SizedBox(
@@ -263,7 +182,7 @@ class _SignInPageState extends State<SignInPage> {
                       ])),
                   SizedBox(height: height / 4, width: width),
                   Container(
-                    margin:const EdgeInsets.only(left:20, right: 20),
+                      margin: const EdgeInsets.only(left: 20, right: 20),
                       width: 500,
                       height: height,
                       child: ElevatedButton(

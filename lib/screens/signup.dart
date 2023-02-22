@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../user.dart';
 import 'signin.dart';
 import 'home.dart';
+import '../clubs_db.dart';
 
 List userInfo = [];
 bool hasSignedUp = false;
@@ -14,10 +15,15 @@ class SignUpPage extends StatefulWidget {
   Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final credential = await auth
           .createUserWithEmailAndPassword(email: email, password: password);
       print("Signed up");
       hasSignedUp = true;
+
+      // User user = auth.currentUser!;
+      // await Dbhelper(uid: user.uid).updateUserData('Name', 123456789, 'D11', 2023, email, password, [0,1,2,3,4,5]);
+
     } on FirebaseAuthException catch (e) {}
   }
 

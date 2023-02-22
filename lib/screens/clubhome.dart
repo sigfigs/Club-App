@@ -41,29 +41,24 @@ class _ClubHomeState extends State<ClubHome> {
           actions: <Widget>[
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
-                child: ac.role == 'Admin'
-                    ? GestureDetector(
-                        onTap: (() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Attendance(
-                                      clubName: widget.clubName,
-                                      clubDay: widget.clubDay,
-                                      clubID: widget.clubID)));
-                        }),
-                        child:
-                            const Icon(Icons.perm_contact_calendar, size: 35),
-                      )
-                    : null),
-            Container(
-                margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
                 child: GestureDetector(
                   onTap: (() {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Profile()));
+                            builder: (context) => Attendance(
+                                clubName: widget.clubName,
+                                clubDay: widget.clubDay,
+                                clubID: widget.clubID)));
+                  }),
+                  child: const Icon(Icons.perm_contact_calendar, size: 35),
+                )),
+            Container(
+                margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
+                child: GestureDetector(
+                  onTap: (() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Profile()));
                   }),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(50.0),
