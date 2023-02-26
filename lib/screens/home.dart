@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'clubhome.dart';
 import 'section.dart';
 import 'profile.dart';
-import 'package:club_app_5/clubs_db.dart';
 import 'signin.dart';
 import 'searchclub.dart';
 
@@ -28,7 +27,7 @@ class _HomeState extends State<Home> {
             elevation: 0,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
-            title: const Text("BXSCI Clubs",
+            title: const Text("SciClubs",
                 style: TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold)),
             centerTitle: true,

@@ -1,29 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../user.dart';
 import 'signin.dart';
 import 'home.dart';
-import '../clubs_db.dart';
 
 List userInfo = [];
 bool hasSignedUp = false;
 
+CollectionReference users = FirebaseFirestore.instance.collection('users');
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+
+
+  Future<void> addUser(String full_name, String osis, String official_class,
+      String graduation_year, String bxscience_email, String password) {
+    // Call the user's CollectionReference to add a new user
+
+    return users
+        .add({
+          'full_name': full_name, // John Doe
+          'osis': osis,
+          'official_class': official_class,
+          'graduation_year': graduation_year,
+          'bxscience_email': bxscience_email,
+          'password': password
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
 
   Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
-      final credential = await auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final credential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       print("Signed up");
       hasSignedUp = true;
-
-      // User user = auth.currentUser!;
-      // await Dbhelper(uid: user.uid).updateUserData('Name', 123456789, 'D11', 2023, email, password, [0,1,2,3,4,5]);
-
     } on FirebaseAuthException catch (e) {}
   }
 
@@ -98,11 +113,18 @@ class _SignUpPageState extends State<SignUpPage> {
                                                     const Home(),
                                               ),
                                             );
-                                            await widget
+                                            widget
                                                 .createUserWithEmailAndPassword(
                                                     userInfo[4], userInfo[5]);
+                                            widget.addUser(
+                                                userInfo[0],
+                                                userInfo[1],
+                                                userInfo[2],
+                                                userInfo[3],
+                                                userInfo[4],
+                                                userInfo[5]);
                                             if (hasSignedUp) {
-                                              print(userInfo);
+                                              // ignore: use_build_context_synchronously
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
