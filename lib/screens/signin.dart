@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'signup.dart';
 import 'home.dart';
 import '../clubs_db.dart';
 import '../user.dart';
 
-String userEmail = "";
+Map<String, dynamic> userData = {};
 bool isLoggedIn = false;
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+var firebaseUser = FirebaseAuth.instance.currentUser!;
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
+
+  Future<void> getUserData() async {
+    // var firebaseUser = await FirebaseAuth.instance.currentUser!;
+    String docID = "U5wwBd98rs16GW8F9NWZ";
+    DocumentSnapshot document = await usersCollection.doc(docID).get();
+    userData = document.data() as Map<String, dynamic>;
+    print(userData);
+  }
 
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       print("Signed in");
-      userEmail = email;
+      getUserData();
+
       isLoggedIn = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -192,5 +205,5 @@ class _SignInPageState extends State<SignInPage> {
   }
 }
 
-Userx ac = Userx(["0", "1", "2", "3", "4", "5"], userEmail, "password", "name",
-    "role", 2023, 222445629, "info");
+Userx ac = Userx(["0", "1", "2", "3", "4", "5"], "userEmail", "password",
+    "name", "role", 2023, 222445629, "info");

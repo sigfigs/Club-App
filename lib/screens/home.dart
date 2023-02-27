@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'clubhome.dart';
-import 'section.dart';
 import 'profile.dart';
+import 'section.dart';
 import 'signin.dart';
 import 'searchclub.dart';
+import '../clubs_db.dart';
+
+Future<void> addClub(String clubID) async {
+  if (userData['clubs'].length == 0) {
+    userData['clubs'] = [];
+  }
+  String docID = "U5wwBd98rs16GW8F9NWZ";
+  usersCollection
+      .doc(docID)
+      .update({'clubs': userData['clubs'].add(clubID)})
+      .then((value) => print("Club added."))
+      .catchError((error) => print("Failed to add club: $error"));
+}
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -152,20 +166,24 @@ class _SectionTabState extends State<SectionTab> {
 }
 
 Widget buildMyClubs() {
-  return (Text("My Clubs"));
-  // List<Widget> clubs = [];
-  // for (int i = 0; i < ac.clubs.length; i++) {
-  //   var row = monkey[int.parse(ac.clubs[i]) + 1];
-  //   clubs.add(ClubCard(
-  //     clubName: row[1],
-  //     clubDay: row[3],
-  //     clubAdvisor: row[4],
-  //     clubCategory: row[2],
-  //     clubID: row[0],
-  //   ));
-  // }
-  // return (SingleChildScrollView(
-  //     scrollDirection: Axis.horizontal, child: Row(children: clubs)));
+  List<Widget> clubs = [];
+  if (userData['clubs'] == null || userData['clubs'].length == 0) {
+    return (Text("My Clubs"));
+  }
+  List clubIDs = userData['clubs'];
+  print("clubIDs: $clubIDs");
+  for (int i = 0; i < clubIDs.length; i++) {
+    var row = monkey[int.parse(clubIDs[i])];
+    clubs.add(ClubCard(
+      clubName: row[1],
+      clubDay: row[3],
+      clubAdvisor: row[4],
+      clubCategory: row[2],
+      clubID: row[0],
+    ));
+  }
+  return (SingleChildScrollView(
+      scrollDirection: Axis.horizontal, child: Row(children: clubs)));
 }
 
 Widget buildSections() {
@@ -306,7 +324,8 @@ class _ClubCardState extends State<ClubCard> {
                                 backgroundColor: MaterialStatePropertyAll(
                                     Colors.green[600])),
                             onPressed: () {
-                              db.joinClub("1", widget.clubID);
+                              // db.joinClub("1", widget.clubID);
+                              addClub(widget.clubID.toString());
                             },
                           ),
                         )

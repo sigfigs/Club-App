@@ -22,22 +22,6 @@ class Dbhelper {
   final String? uid;
   Dbhelper({this.uid});
 
-  //collection reference
-  final CollectionReference userDataCollection =
-      FirebaseFirestore.instance.collection('userData');
-
-  Future updateUserData(String name, int osis, String oc, int gradYear,
-      String email, String password, List clubs) async {
-    return await userDataCollection.doc(uid).set({
-      'name': name,
-      'osis': osis,
-      'official_class': oc,
-      'graduation_year': gradYear,
-      'email': email,
-      'clubs': clubs
-    });
-  }
-
   final connection = PostgreSQLConnection(
     "localhost",
     5432,
@@ -50,6 +34,8 @@ class Dbhelper {
     try {
       await connection.open();
       debugPrint("Database Connected!");
+      getData();
+
     } catch (e) {
       debugPrint("Error: $e");
     }
