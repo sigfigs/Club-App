@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'signin.dart';
-import '../user.dart';
-
 class Attendance extends StatefulWidget {
   final String clubName;
   final String clubDay;
@@ -36,12 +33,19 @@ class _AttendanceState extends State<Attendance> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               TableCalendar(
-                  firstDay: DateTime.utc(2022, 1, 1),
-                  lastDay: DateTime.utc(2030, 1, 1),
-                  focusedDay: DateTime.now(),
-                  calendarBuilders: CalendarBuilders(
-                      markerBuilder: (context, day, events) =>
-                          buildMarker(Colors.green))),
+                firstDay: DateTime.utc(2022, 1, 1),
+                lastDay: DateTime.utc(2030, 1, 1),
+                focusedDay: DateTime.now(),
+                calendarBuilders: CalendarBuilders(
+                  markerBuilder: (context, day, events) {
+                    if (day.year == 2023 && day.month == 2 && day.day == 26) {
+                      return buildMarker(Colors.green);
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+              ),
               Container(
                   margin: EdgeInsets.fromLTRB(25, 50, 0, 0),
                   child: const Text("Key",

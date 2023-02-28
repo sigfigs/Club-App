@@ -7,16 +7,30 @@ import 'signin.dart';
 import 'searchclub.dart';
 import '../clubs_db.dart';
 
-Future<void> addClub(String clubID) async {
-  if (userData['clubs'].length == 0) {
-    userData['clubs'] = [];
-  }
-  String docID = "U5wwBd98rs16GW8F9NWZ";
+Future<void> leaveClub(String clubID) async {
+  Map clubsMap = userData['clubs'];
+  clubsMap.remove(clubID);
+
+  String docID = "kvutT3X9zqR2qX5P2W14";
   usersCollection
       .doc(docID)
-      .update({'clubs': userData['clubs'].add(clubID)})
-      .then((value) => print("Club added."))
+      .update({'clubs': clubsMap})
+      .then((value) => print("Club $clubID removed."))
+      .catchError((error) => print("Failed to remove club: $error"));
+  print(userData);
+}
+
+Future<void> addClub(String clubID) async {
+  userData['clubs'][clubID] = [];
+
+  //find a way to get the docID for the user (this is just lij12@bxscience.edu's id)
+  String docID = "kvutT3X9zqR2qX5P2W14";
+  usersCollection
+      .doc(docID)
+      .update({'clubs': userData['clubs']})
+      .then((value) => print("Club $clubID added."))
       .catchError((error) => print("Failed to add club: $error"));
+  print(userData);
 }
 
 class Home extends StatefulWidget {
@@ -166,15 +180,19 @@ class _SectionTabState extends State<SectionTab> {
 }
 
 Widget buildMyClubs() {
-  List<Widget> clubs = [];
-  if (userData['clubs'] == null || userData['clubs'].length == 0) {
+  // Type keyType = clubsMap.keys.first.runtimeType;
+  // Type valueType = clubsMap.values.first.runtimeType;
+  // print(keyType);
+  // print(valueType);
+  Map clubsMap = userData['clubs'];
+  List clubIDs = clubsMap.keys.toList();
+  List<Widget> clubWidgets = [];
+  if (clubIDs.isEmpty || userData['clubs'].length == 0) {
     return (Text("My Clubs"));
   }
-  List clubIDs = userData['clubs'];
-  print("clubIDs: $clubIDs");
   for (int i = 0; i < clubIDs.length; i++) {
     var row = monkey[int.parse(clubIDs[i])];
-    clubs.add(ClubCard(
+    clubWidgets.add(ClubCard(
       clubName: row[1],
       clubDay: row[3],
       clubAdvisor: row[4],
@@ -183,7 +201,7 @@ Widget buildMyClubs() {
     ));
   }
   return (SingleChildScrollView(
-      scrollDirection: Axis.horizontal, child: Row(children: clubs)));
+      scrollDirection: Axis.horizontal, child: Row(children: clubWidgets)));
 }
 
 Widget buildSections() {
@@ -285,7 +303,7 @@ class _ClubCardState extends State<ClubCard> {
         }),
         child: SizedBox(
             width: sWidth * 0.25,
-            height: sHeight * 0.45,
+            // height: sHeight * 0.45,
             child: Card(
                 elevation: 3,
                 color: Colors.white,
@@ -316,21 +334,33 @@ class _ClubCardState extends State<ClubCard> {
                             buildTag(widget.clubID),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: TextButton(
-                            child: Text("Join"),
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(
-                                    Colors.green[600])),
-                            onPressed: () {
-                              // db.joinClub("1", widget.clubID);
-                              addClub(widget.clubID.toString());
-                            },
-                          ),
-                        )
+                        buildJoinLeave(widget.clubID.toString())
                       ]),
                 ))));
+  }
+
+  Widget buildJoinLeave(String clubID) {
+    Map clubsMap = userData['clubs'];
+    List clubIDs = clubsMap.keys.toList();
+    bool joined = false;
+    if (clubIDs.contains(clubID)) {
+      joined = true;
+    }
+
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: TextButton(
+          child: joined ? Text("Leave") : Text("Join"),
+          style: ButtonStyle(
+              backgroundColor: joined
+                  ? MaterialStatePropertyAll(Colors.red[600])
+                  : MaterialStatePropertyAll(Colors.green[600])),
+          onPressed: () {
+            setState(() {
+              joined ? leaveClub(clubID) : addClub(clubID);
+            });
+          },
+        ));
   }
 }
 

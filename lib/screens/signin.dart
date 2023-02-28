@@ -19,7 +19,7 @@ class SignInPage extends StatefulWidget {
 
   Future<void> getUserData() async {
     // var firebaseUser = await FirebaseAuth.instance.currentUser!;
-    String docID = "U5wwBd98rs16GW8F9NWZ";
+    String docID = "kvutT3X9zqR2qX5P2W14";
     DocumentSnapshot document = await usersCollection.doc(docID).get();
     userData = document.data() as Map<String, dynamic>;
     print(userData);
