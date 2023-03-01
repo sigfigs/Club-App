@@ -64,7 +64,8 @@ class _AttendanceState extends State<Attendance> {
               ),
             ),
           ])),
-      floatingActionButton: buildTakeAttendance(),
+      floatingActionButton:
+          userData['user_type'] != "Member" ? buildTakeAttendance() : null,
     );
   }
 

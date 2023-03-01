@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'clubhome.dart';
-import 'profile2.dart';
+import 'profile.dart';
 import 'section.dart';
 import '../fbHelper.dart';
 import 'searchclub.dart';
@@ -277,14 +277,14 @@ class _ClubCardState extends State<ClubCard> {
                         clubID: widget.clubID,
                       )));
         }),
-        child: SizedBox(
-            width: sWidth * 0.3,
-            // height: sHeight * 0.45,
-            child: Card(
-                elevation: 3,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
+        // height: sHeight * 0.6,
+        child: Card(
+            elevation: 3,
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+            child: SizedBox(
+                width: sWidth * 0.4,
                 child: Padding(
                   padding: EdgeInsets.all(12),
                   child: Column(

@@ -26,7 +26,8 @@ class SignUpPage extends StatefulWidget {
           'graduation_year': graduation_year,
           'bxscience_email': bxscience_email,
           'password': password,
-          'clubs': [],
+          'clubs': {},
+          'user_type': "Member"
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));

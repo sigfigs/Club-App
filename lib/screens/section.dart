@@ -71,6 +71,7 @@ class _Section extends State<Section> {
                     ),
                   ),
                   GridView.count(
+                    childAspectRatio: 0.6,
                     shrinkWrap: true,
                     crossAxisCount: crossAxisCount,
                     children: getAllClubsInCategory(),

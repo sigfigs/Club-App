@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_app_5/clubs_db.dart';
 import 'home.dart';
-import 'profile2.dart';
+import 'profile.dart';
 import 'discussions.dart';
 import 'attendance.dart';
 
