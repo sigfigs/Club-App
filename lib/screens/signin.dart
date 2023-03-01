@@ -7,40 +7,12 @@ import 'signup.dart';
 import 'home.dart';
 import '../clubs_db.dart';
 import '../user.dart';
+import '../fbHelper.dart';
 
-Map<String, dynamic> userData = {};
-bool isLoggedIn = false;
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-var firebaseUser = FirebaseAuth.instance.currentUser!;
+fbHelper fb = fbHelper();
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
-
-  Future<void> getUserData() async {
-    // var firebaseUser = await FirebaseAuth.instance.currentUser!;
-    String docID = "kvutT3X9zqR2qX5P2W14";
-    DocumentSnapshot document = await usersCollection.doc(docID).get();
-    userData = document.data() as Map<String, dynamic>;
-    print(userData);
-  }
-
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      print("Signed in");
-      getUserData();
-
-      isLoggedIn = true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }
 
   @override
   State<SignInPage> createState() => _SignInPageState();
@@ -137,7 +109,7 @@ class _SignInPageState extends State<SignInPage> {
                                               BorderRadius.circular(10)),
                                       backgroundColor: const Color(0xFF097969)),
                                   onPressed: () async {
-                                    widget.signInWithEmailAndPassword(
+                                    fb.signInWithEmailAndPassword(
                                         t1.text, t2.text);
                                     if (isLoggedIn) {
                                       Navigator.push(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:club_app_5/clubs_db.dart';
 import 'home.dart';
-import 'profile.dart';
+import 'profile2.dart';
 import 'discussions.dart';
 import 'attendance.dart';
-import 'signin.dart';
+
+var w, h;
 
 class ClubHome extends StatefulWidget {
   final String clubName;
@@ -27,6 +28,8 @@ class ClubHome extends StatefulWidget {
 class _ClubHomeState extends State<ClubHome> {
   @override
   Widget build(BuildContext context) {
+    w = MediaQuery.of(context).size.width;
+    h = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

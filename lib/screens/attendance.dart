@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../fbHelper.dart';
+
+fbHelper fb = fbHelper();
 
 class Attendance extends StatefulWidget {
   final String clubName;
@@ -15,60 +19,93 @@ class Attendance extends StatefulWidget {
   State<Attendance> createState() => _AttendanceState();
 }
 
+var w, h;
+
 class _AttendanceState extends State<Attendance> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  Map clubsMap = userData['clubs'];
 
   @override
   Widget build(BuildContext context) {
+    w = MediaQuery.of(context).size.width;
+    h = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 75,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          title: Text('${widget.clubName} Attendance'),
-        ),
-        body: Container(
-            margin: EdgeInsets.all(10),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TableCalendar(
-                firstDay: DateTime.utc(2022, 1, 1),
-                lastDay: DateTime.utc(2030, 1, 1),
-                focusedDay: DateTime.now(),
-                calendarBuilders: CalendarBuilders(
-                  markerBuilder: (context, day, events) {
-                    if (day.year == 2023 && day.month == 2 && day.day == 26) {
+      appBar: AppBar(
+        toolbarHeight: 75,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        title: Text('${widget.clubName} Attendance'),
+      ),
+      body: Container(
+          margin: EdgeInsets.all(10),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            TableCalendar(
+              firstDay: DateTime.utc(2022, 1, 1),
+              lastDay: DateTime.utc(2030, 1, 1),
+              focusedDay: DateTime.now(),
+              calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, day, events) {
+                  //fix when taking attendance on a club that user is not part of yet (calling .length on null)
+                  for (int i = 0; i < clubsMap[widget.clubID].length; i++) {
+                    List presentDate = clubsMap[widget.clubID][i].split("-");
+                    String m = presentDate[0];
+                    String d = presentDate[1];
+                    String y = presentDate[2];
+
+                    if (day.year.toString() == y &&
+                        day.month.toString() == m &&
+                        day.day.toString() == d) {
                       return buildMarker(Colors.green);
-                    } else {
-                      return null;
                     }
-                  },
-                ),
+                  }
+                },
               ),
-              Container(
-                  margin: EdgeInsets.fromLTRB(25, 50, 0, 0),
-                  child: const Text("Key",
-                      style: TextStyle(
-                        fontSize: 24,
-                      ))),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [buildMarker(Colors.green), Text(" = present")]),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [buildMarker(Colors.red), Text(" = absent")]),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [buildMarker(Colors.grey), Text(" = no meeting")]),
-            ])));
+            ),
+          ])),
+      floatingActionButton: buildTakeAttendance(),
+    );
+  }
+
+  final attendanceController = TextEditingController();
+  Widget buildTextFieldAttendance() {
+    return (Column(children: [
+      TextField(
+        controller: attendanceController,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Paste OSIS',
+        ),
+      ),
+      TextButton(
+        child: Text("take attendance"),
+        onPressed: () {
+          var dt = DateTime.now();
+          String date = "${dt.month}-${dt.day}-${dt.year}";
+          fb.takeAttendance(widget.clubID, attendanceController.text, "$date");
+        },
+      )
+    ]));
+  }
+
+  Widget buildTakeAttendance() {
+    return FloatingActionButton(
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return buildTextFieldAttendance();
+          },
+        );
+      },
+      child: Icon(Icons.add),
+    );
   }
 
   Widget buildMarker(Color c) {
     return Container(
-        // margin: const EdgeInsets.only(top: 40),
-        height: 5,
-        decoration: BoxDecoration(color: c, shape: BoxShape.circle));
+        height: 5, decoration: BoxDecoration(color: c, shape: BoxShape.circle));
   }
 }
 

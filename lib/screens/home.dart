@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'clubhome.dart';
-import 'profile.dart';
+import 'profile2.dart';
 import 'section.dart';
-import 'signin.dart';
+import '../fbHelper.dart';
 import 'searchclub.dart';
 import '../clubs_db.dart';
 
-Future<void> leaveClub(String clubID) async {
-  Map clubsMap = userData['clubs'];
-  clubsMap.remove(clubID);
-
-  String docID = "kvutT3X9zqR2qX5P2W14";
-  usersCollection
-      .doc(docID)
-      .update({'clubs': clubsMap})
-      .then((value) => print("Club $clubID removed."))
-      .catchError((error) => print("Failed to remove club: $error"));
-  print(userData);
-}
-
-Future<void> addClub(String clubID) async {
-  userData['clubs'][clubID] = [];
-
-  //find a way to get the docID for the user (this is just lij12@bxscience.edu's id)
-  String docID = "kvutT3X9zqR2qX5P2W14";
-  usersCollection
-      .doc(docID)
-      .update({'clubs': userData['clubs']})
-      .then((value) => print("Club $clubID added."))
-      .catchError((error) => print("Failed to add club: $error"));
-  print(userData);
-}
+fbHelper fb = fbHelper();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -180,15 +156,14 @@ class _SectionTabState extends State<SectionTab> {
 }
 
 Widget buildMyClubs() {
-  // Type keyType = clubsMap.keys.first.runtimeType;
-  // Type valueType = clubsMap.values.first.runtimeType;
-  // print(keyType);
-  // print(valueType);
+  fb.getUserData();
   Map clubsMap = userData['clubs'];
   List clubIDs = clubsMap.keys.toList();
+  print("clubIDs: $clubIDs");
   List<Widget> clubWidgets = [];
+
   if (clubIDs.isEmpty || userData['clubs'].length == 0) {
-    return (Text("My Clubs"));
+    return (const Text("My Clubs"));
   }
   for (int i = 0; i < clubIDs.length; i++) {
     var row = monkey[int.parse(clubIDs[i])];
@@ -200,8 +175,9 @@ Widget buildMyClubs() {
       clubID: row[0],
     ));
   }
-  return (SingleChildScrollView(
-      scrollDirection: Axis.horizontal, child: Row(children: clubWidgets)));
+  // return (SingleChildScrollView(
+  //     scrollDirection: Axis.horizontal, child: Row(children: clubWidgets)));
+  return Row(children: clubWidgets);
 }
 
 Widget buildSections() {
@@ -302,7 +278,7 @@ class _ClubCardState extends State<ClubCard> {
                       )));
         }),
         child: SizedBox(
-            width: sWidth * 0.25,
+            width: sWidth * 0.3,
             // height: sHeight * 0.45,
             child: Card(
                 elevation: 3,
@@ -326,8 +302,8 @@ class _ClubCardState extends State<ClubCard> {
                         const Text(
                             "lorem ipsum is dummy text. lorem ipsum is dummy text. lorem ipsum is dummy text."),
                         const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Wrap(
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             buildTag(widget.clubDay),
                             buildTag(widget.clubCategory),
@@ -350,14 +326,20 @@ class _ClubCardState extends State<ClubCard> {
     return Padding(
         padding: EdgeInsets.all(10),
         child: TextButton(
-          child: joined ? Text("Leave") : Text("Join"),
+          child: joined
+              ? Text(
+                  "Leave",
+                  style: TextStyle(color: Colors.white),
+                )
+              : Text("Join", style: TextStyle(color: Colors.white)),
           style: ButtonStyle(
               backgroundColor: joined
                   ? MaterialStatePropertyAll(Colors.red[600])
                   : MaterialStatePropertyAll(Colors.green[600])),
           onPressed: () {
             setState(() {
-              joined ? leaveClub(clubID) : addClub(clubID);
+              joined ? fb.leaveClub(clubID) : fb.addClub(clubID);
+              buildMyClubs();
             });
           },
         ));
