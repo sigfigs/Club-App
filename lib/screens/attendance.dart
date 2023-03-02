@@ -48,7 +48,7 @@ class _AttendanceState extends State<Attendance> {
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, day, events) {
                   if (clubsMap[widget.clubID] == null) {
-                    fb.addClub(widget.clubID);
+                    fb.addClub(widget.clubID, docID, userData['clubs']);
                   }
 
                   for (int i = 0; i < clubsMap[widget.clubID].length; i++) {

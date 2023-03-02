@@ -4,6 +4,7 @@ import 'home.dart';
 import 'profile.dart';
 import 'discussions.dart';
 import 'attendance.dart';
+import '../fbHelper.dart';
 
 var w, h;
 
@@ -26,6 +27,8 @@ class ClubHome extends StatefulWidget {
 }
 
 class _ClubHomeState extends State<ClubHome> {
+  fbHelper fb = fbHelper();
+
   @override
   Widget build(BuildContext context) {
     w = MediaQuery.of(context).size.width;
@@ -42,6 +45,7 @@ class _ClubHomeState extends State<ClubHome> {
           ),
           centerTitle: true,
           actions: <Widget>[
+            userData['clubs'][widget.clubID] != null ? 
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
                 child: GestureDetector(
@@ -55,7 +59,7 @@ class _ClubHomeState extends State<ClubHome> {
                                 clubID: widget.clubID)));
                   }),
                   child: const Icon(Icons.perm_contact_calendar, size: 35),
-                )),
+                )) : Container(),
             Container(
                 margin: const EdgeInsets.fromLTRB(10, 10, 15, 10),
                 child: GestureDetector(

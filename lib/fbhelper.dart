@@ -10,9 +10,9 @@ bool isLoggedIn = false;
 bool hasSignedUp = false;
 Map<String, dynamic> userData = {};
 String eMAIL = "";
+String docID = "";
 
 class fbHelper {
-  static String docID = "";
   fbHelper();
 
   // Future<void> addUser(String full_name, String osis, String official_class,
@@ -120,17 +120,19 @@ class fbHelper {
   }
 
   Future<void> takeAttendance(String clubID, String osis, String date) async {
-    Map clubsMap = userData['clubs'];
     final querySnapshot = await usersCollection.get();
 
     querySnapshot.docs.forEach((doc) {
       final o = doc.get('osis');
+      Map attendeeClubs = doc.get('clubs');
+      print("attendeeClubs: $attendeeClubs");
+      addClub(clubID, doc.id, attendeeClubs);
+      attendeeClubs[clubID].add(date);
 
       if (o == '$osis') {
-        clubsMap[clubID].add(date);
         usersCollection
             .doc(doc.id)
-            .update({'clubs': clubsMap})
+            .update({'clubs': attendeeClubs})
             .then((value) =>
                 print("Club $clubID attendance updated for $osis on $date."))
             .catchError((error) => print("Attendance update failed: $error"));
@@ -149,12 +151,12 @@ class fbHelper {
         .catchError((error) => print("Failed to remove club: $error"));
   }
 
-  Future<void> addClub(String clubID) async {
-    userData['clubs'][clubID] = [];
+  Future<void> addClub(String clubID, String dID, Map data) async {
+    // userData['clubs'][clubID] = [];
+    data[clubID] = [];
 
-    //find a way to get the docID for the user (this is just lij12@bxscience.edu's id)
     usersCollection
-        .doc(docID)
+        .doc(dID)
         .update({'clubs': userData['clubs']})
         .then((value) => print("Club $clubID added."))
         .catchError((error) => print("Failed to add club: $error"));

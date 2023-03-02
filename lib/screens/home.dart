@@ -85,16 +85,6 @@ class _HomeState extends State<Home> {
                   buildMyClubs(),
 
                   const SizedBox(height: 75),
-
-                  //popular clubs
-                  const Text("Popular Clubs",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      )),
-                  const SizedBox(height: 25),
-                  buildMyClubs(),
                 ])))));
   }
 }
@@ -165,9 +155,6 @@ Widget buildMyClubs() {
 
   List<Widget> clubWidgets = [];
 
-  if (clubIDs.isEmpty || userData['clubs'].length == 0) {
-    return (const Text("My Clubs"));
-  }
   for (int i = 0; i < clubIDs.length; i++) {
     var row = monkey[int.parse(clubIDs[i])];
     clubWidgets.add(ClubCard(
@@ -340,8 +327,15 @@ class _ClubCardState extends State<ClubCard> {
                   : MaterialStatePropertyAll(Colors.green[600])),
           onPressed: () {
             setState(() {
-              joined ? fb.leaveClub(clubID) : fb.addClub(clubID);
-              buildMyClubs();
+              joined
+                  ? fb.leaveClub(clubID)
+                  : fb.addClub(clubID, docID, userData['clubs']);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return Home();
+                }),
+              );
             });
           },
         ));

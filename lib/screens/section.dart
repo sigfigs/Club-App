@@ -83,21 +83,6 @@ class _Section extends State<Section> {
           ),
         ));
 
-    // body: SingleChildScrollView(
-    //     child: Column(children: [
-    //   Image.asset(widget.sectionBG, fit: BoxFit.fill),
-    //   Padding(
-    //       padding: const EdgeInsets.all(30),
-    //       child: Align(
-    //           alignment: Alignment.center,
-    //           child: Text('All ${widget.sectionName} Clubs',
-    //               style: const TextStyle(
-    //                   color: Colors.black,
-    //                   fontSize: 30,
-    //                   fontWeight: FontWeight.bold)))),
-    //   Column(children: getAllClubsInCategory()),
-    // ]))
-    // );
   }
 
   List<Widget> getAllClubsInCategory() {
