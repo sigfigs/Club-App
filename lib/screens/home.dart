@@ -157,9 +157,12 @@ class _SectionTabState extends State<SectionTab> {
 
 Widget buildMyClubs() {
   fb.getUserData();
+  if (userData['clubs'] == null) {
+    return const Text("My Clubs");
+  }
   Map clubsMap = userData['clubs'];
   List clubIDs = clubsMap.keys.toList();
-  print("clubIDs: $clubIDs");
+
   List<Widget> clubWidgets = [];
 
   if (clubIDs.isEmpty || userData['clubs'].length == 0) {
@@ -175,9 +178,8 @@ Widget buildMyClubs() {
       clubID: row[0],
     ));
   }
-  // return (SingleChildScrollView(
-  //     scrollDirection: Axis.horizontal, child: Row(children: clubWidgets)));
-  return Row(children: clubWidgets);
+  return (SingleChildScrollView(
+      scrollDirection: Axis.horizontal, child: Row(children: clubWidgets)));
 }
 
 Widget buildSections() {

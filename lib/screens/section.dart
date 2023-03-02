@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import '../clubs_db.dart';
 import 'signin.dart';
+import '../fbHelper.dart';
 
 class Section extends StatefulWidget {
   final String sectionName;
@@ -31,7 +32,7 @@ class _Section extends State<Section> {
             title:
                 Text(widget.sectionName, style: TextStyle(color: Colors.black)),
             centerTitle: true),
-        floatingActionButton: ac.role == 'Admin'
+        floatingActionButton: userData['user_type'] != 'Member'
             ? FloatingActionButton(
                 onPressed: _showClubFormDialog,
                 elevation: 10,
@@ -71,7 +72,7 @@ class _Section extends State<Section> {
                     ),
                   ),
                   GridView.count(
-                    childAspectRatio: 0.6,
+                    childAspectRatio: 0.5,
                     shrinkWrap: true,
                     crossAxisCount: crossAxisCount,
                     children: getAllClubsInCategory(),
@@ -171,8 +172,5 @@ class _Section extends State<Section> {
         );
       },
     );
-
-    // db.insertClub(
-    //     "6969", clubName, category, meetingDay, advisorName, advisorEmail);
   }
 }

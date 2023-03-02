@@ -1,54 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'signin.dart';
 import 'home.dart';
+import '../fbHelper.dart';
 
 List userInfo = [];
-bool hasSignedUp = false;
-
-CollectionReference users = FirebaseFirestore.instance.collection('users');
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
-
-
-  Future<void> addUser(String full_name, String osis, String official_class,
-      String graduation_year, String bxscience_email, String password) {
-    // Call the user's CollectionReference to add a new user
-
-    return users
-        .add({
-          'full_name': full_name, // John Doe
-          'osis': osis,
-          'official_class': official_class,
-          'graduation_year': graduation_year,
-          'bxscience_email': bxscience_email,
-          'password': password,
-          'clubs': {},
-          'user_type': "Member"
-        })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
-  }
-
-  Future<void> createUserWithEmailAndPassword(
-      String email, String password) async {
-    try {
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      final credential = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print("Signed up");
-      hasSignedUp = true;
-    } on FirebaseAuthException catch (e) {}
-  }
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  fbHelper fb = fbHelper();
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -105,20 +72,46 @@ class _SignUpPageState extends State<SignUpPage> {
                                                     BorderRadius.circular(10)),
                                             backgroundColor:
                                                 const Color(0xFF097969)),
+                                        // onPressed: () {
+                                        //   userInfo.clear();
+                                        //   if (_formKey.currentState!
+                                        //       .validate()) {
+                                        //     Navigator.of(context).push(
+                                        //       MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             const Home(),
+                                        //       ),
+                                        //     );
+                                        //     fb.createUserWithEmailAndPassword(
+                                        //         userInfo[4], userInfo[5]);
+                                        //     fb.addUser(
+                                        //         userInfo[0],
+                                        //         userInfo[1],
+                                        //         userInfo[2],
+                                        //         userInfo[3],
+                                        //         userInfo[4],
+                                        //         userInfo[5]);
+                                        //     if (hasSignedUp) {
+                                        //       // ignore: use_build_context_synchronously
+                                        //       Navigator.push(
+                                        //         context,
+                                        //         MaterialPageRoute(
+                                        //             builder: (context) =>
+                                        //                 const Home()),
+                                        //       );
+                                        //     }
+                                        //     print("getting user data");
+                                        //     fb.getUserData();
+                                        //   }
+                                        // },
                                         onPressed: () async {
                                           userInfo.clear();
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Home(),
-                                              ),
-                                            );
-                                            widget
+                                            await fb
                                                 .createUserWithEmailAndPassword(
                                                     userInfo[4], userInfo[5]);
-                                            widget.addUser(
+                                            await fb.addUser(
                                                 userInfo[0],
                                                 userInfo[1],
                                                 userInfo[2],
@@ -126,7 +119,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 userInfo[4],
                                                 userInfo[5]);
                                             if (hasSignedUp) {
-                                              // ignore: use_build_context_synchronously
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -198,8 +190,7 @@ Widget buildField(String info) {
       ),
       validator: (value) {
         userInfo.add(t1.text);
-        print(userInfo);
-        print(t1.text);
+
         if (value!.isEmpty) {
           return 'Please enter your ${info.toLowerCase()}';
         }

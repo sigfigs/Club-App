@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'clubhome.dart';
-import 'home.dart';
-import 'dart:ui';
-import 'signin.dart';
+import '../fbHelper.dart';
 
 class Discussion extends StatefulWidget {
   final String clubName;
@@ -59,9 +56,11 @@ class _Discussion extends State<Discussion> {
                 title: Text(post.author),
                 subtitle: Text('Posted at:  ${post.timestamp}'),
               )),
-           Padding(
+          Padding(
               padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
-              child: Text(post.info, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
+              child: Text(post.info,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20))),
         ]));
   }
 
@@ -106,7 +105,7 @@ class _Discussion extends State<Discussion> {
                   setState(() {
                     discuss.add(Post(
                         info: controller.text,
-                        author: ac.name,
+                        author: userData['full_name'],
                         timestamp:
                             now.hour.toString() + ':' + now.minute.toString()));
                     Navigator.of(context).pop();

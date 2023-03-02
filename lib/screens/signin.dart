@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'signup.dart';
 import 'home.dart';
 import '../clubs_db.dart';
-import '../user.dart';
 import '../fbHelper.dart';
 
 fbHelper fb = fbHelper();
@@ -98,7 +94,7 @@ class _SignInPageState extends State<SignInPage> {
                                   validator: (value) {},
                                 ))),
                         Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 5),
+                            padding: const EdgeInsets.only(bottom: 5),
                             child: SizedBox(
                                 width: 500,
                                 height: height,
@@ -108,7 +104,7 @@ class _SignInPageState extends State<SignInPage> {
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                       backgroundColor: const Color(0xFF097969)),
-                                  onPressed: () async {
+                                  onPressed: () {
                                     fb.signInWithEmailAndPassword(
                                         t1.text, t2.text);
                                     if (isLoggedIn) {
@@ -125,27 +121,26 @@ class _SignInPageState extends State<SignInPage> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white)),
                                 ))),
-                        Divider(color: Colors.grey[100]),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 5, bottom: 5),
-                            child: SizedBox(
-                                width: 500,
-                                height: height,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      backgroundColor: Colors.white),
-                                  onPressed: () async {},
-                                  child: const Text('Continue with Google',
-                                      style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
-                                )))
+                        // Divider(color: Colors.grey[100]),
+                        // Padding(
+                        //     padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        //     child: SizedBox(
+                        //         width: 500,
+                        //         height: height,
+                        //         child: ElevatedButton(
+                        //           style: ElevatedButton.styleFrom(
+                        //               shape: RoundedRectangleBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(10)),
+                        //               backgroundColor: Colors.white),
+                        //           onPressed: () async {},
+                        //           child: const Text('Continue with Google',
+                        //               style: TextStyle(
+                        //                   fontSize: 20.0,
+                        //                   fontWeight: FontWeight.bold,
+                        //                   color: Colors.black)),
+                        //         )))
                       ])),
-                  SizedBox(height: height / 4, width: width),
                   Container(
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       width: 500,
@@ -176,6 +171,3 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
-
-Userx ac = Userx(["0", "1", "2", "3", "4", "5"], "userEmail", "password",
-    "name", "role", 2023, 222445629, "info");
