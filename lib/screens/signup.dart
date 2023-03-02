@@ -72,46 +72,19 @@ class _SignUpPageState extends State<SignUpPage> {
                                                     BorderRadius.circular(10)),
                                             backgroundColor:
                                                 const Color(0xFF097969)),
-                                        // onPressed: () {
-                                        //   userInfo.clear();
-                                        //   if (_formKey.currentState!
-                                        //       .validate()) {
-                                        //     Navigator.of(context).push(
-                                        //       MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             const Home(),
-                                        //       ),
-                                        //     );
-                                        //     fb.createUserWithEmailAndPassword(
-                                        //         userInfo[4], userInfo[5]);
-                                        //     fb.addUser(
-                                        //         userInfo[0],
-                                        //         userInfo[1],
-                                        //         userInfo[2],
-                                        //         userInfo[3],
-                                        //         userInfo[4],
-                                        //         userInfo[5]);
-                                        //     if (hasSignedUp) {
-                                        //       // ignore: use_build_context_synchronously
-                                        //       Navigator.push(
-                                        //         context,
-                                        //         MaterialPageRoute(
-                                        //             builder: (context) =>
-                                        //                 const Home()),
-                                        //       );
-                                        //     }
-                                        //     print("getting user data");
-                                        //     fb.getUserData();
-                                        //   }
-                                        // },
-                                        onPressed: () async {
+                                        onPressed: () {
                                           userInfo.clear();
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            await fb
-                                                .createUserWithEmailAndPassword(
-                                                    userInfo[4], userInfo[5]);
-                                            await fb.addUser(
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Home(),
+                                              ),
+                                            );
+                                            fb.createUserWithEmailAndPassword(
+                                                userInfo[4], userInfo[5]);
+                                            fb.addUser(
                                                 userInfo[0],
                                                 userInfo[1],
                                                 userInfo[2],
@@ -119,6 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 userInfo[4],
                                                 userInfo[5]);
                                             if (hasSignedUp) {
+                                              // ignore: use_build_context_synchronously
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -126,8 +100,33 @@ class _SignUpPageState extends State<SignUpPage> {
                                                         const Home()),
                                               );
                                             }
+                                            print("getting user data");
+                                            fb.getUserData();
                                           }
                                         },
+                                        // onPressed: () {
+                                        //   userInfo.clear();
+                                        //   if (_formKey.currentState!
+                                        //       .validate()) {
+                                        //   fb.createUserWithEmailAndPassword(
+                                        //       userInfo[4], userInfo[5]);
+                                        //   fb.addUser(
+                                        //       userInfo[0],
+                                        //       userInfo[1],
+                                        //       userInfo[2],
+                                        //       userInfo[3],
+                                        //       userInfo[4],
+                                        //       userInfo[5]);
+                                        //   if (hasSignedUp) {
+                                        //     Navigator.push(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //           builder: (context) =>
+                                        //               const Home()),
+                                        //     );
+                                        //   }
+                                        // }
+                                        // },
                                         child: const Text('Sign Up',
                                             style: TextStyle(
                                                 fontSize: 20.0,
@@ -190,6 +189,7 @@ Widget buildField(String info) {
       ),
       validator: (value) {
         userInfo.add(t1.text);
+        print(userInfo);
 
         if (value!.isEmpty) {
           return 'Please enter your ${info.toLowerCase()}';

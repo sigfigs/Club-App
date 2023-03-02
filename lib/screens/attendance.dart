@@ -47,22 +47,22 @@ class _AttendanceState extends State<Attendance> {
               focusedDay: DateTime.now(),
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, day, events) {
-                  if (clubsMap[widget.clubID] == null) {
-                    fb.addClub(widget.clubID, docID, userData['clubs']);
-                  }
-
-                  for (int i = 0; i < clubsMap[widget.clubID].length; i++) {
-                    List presentDate = clubsMap[widget.clubID][i].split("-");
-                    String m = presentDate[0];
-                    String d = presentDate[1];
-                    String y = presentDate[2];
-
-                    if (day.year.toString() == y &&
-                        day.month.toString() == m &&
-                        day.day.toString() == d) {
-                      return buildMarker(Colors.green);
+                    if (clubsMap[widget.clubID] == null) {
+                      fb.addClub(widget.clubID, docID, userData['clubs']);
                     }
-                  }
+
+                    for (int i = 0; i < clubsMap[widget.clubID].length; i++) {
+                      List presentDate = clubsMap[widget.clubID][i].split("-");
+                      String m = presentDate[0];
+                      String d = presentDate[1];
+                      String y = presentDate[2];
+
+                      if (day.year.toString() == y &&
+                          day.month.toString() == m &&
+                          day.day.toString() == d) {
+                         return buildMarker(Colors.green);
+                      }
+                    }
                 },
               ),
             ),

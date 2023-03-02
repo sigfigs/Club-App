@@ -3,8 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final usersCollection = FirebaseFirestore.instance.collection('users');
 FirebaseFirestore firestore = FirebaseFirestore.instance;
-var firebaseAuth = FirebaseAuth.instance;
-var firebaseUser = firebaseAuth.currentUser!;
+var firebaseUser = FirebaseAuth.instance.currentUser!;
 
 bool isLoggedIn = false;
 bool hasSignedUp = false;
@@ -63,14 +62,32 @@ class fbHelper {
 
   Future<void> createUserWithEmailAndPassword(
       String email, String password) async {
+    // try {
+    //   final FirebaseAuth auth = FirebaseAuth.instance;
+    //   await auth.createUserWithEmailAndPassword(email: email, password: password);
+    //   print("Signed up");
+    //   eMAIL = email;
+    //   hasSignedUp = true;
+    // } on FirebaseAuthException catch (e) {}
+
     try {
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      print("Signed up");
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       eMAIL = email;
       hasSignedUp = true;
-    } on FirebaseAuthException catch (e) {}
+      print("Signed Up");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> getUserData() async {
@@ -115,7 +132,7 @@ class fbHelper {
   }
 
   Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    await FirebaseAuth.instance.signOut();
     print("Signed out");
   }
 

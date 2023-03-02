@@ -44,6 +44,7 @@ dependencies:
   google_sign_in: ^6.0.0
   table_calendar: ^3.0.8
   cloud_firestore: ^4.4.2
+  restart_app: ^1.1.2
   # postgres: ^2.5.2
 
 dev_dependencies:

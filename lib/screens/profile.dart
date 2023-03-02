@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'signin.dart';
 import '../fbHelper.dart';
@@ -66,7 +67,8 @@ class _Profile extends State<Profile> {
                 backgroundColor: Colors.red[600],
               ),
               onPressed: () async {
-                 fb.signOut();
+                await FirebaseAuth.instance.signOut();
+                print("signed out");
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SignInPage()),
